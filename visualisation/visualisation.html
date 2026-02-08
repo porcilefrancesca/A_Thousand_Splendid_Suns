@@ -1,0 +1,35 @@
+ <!--File HTML che definisce il contenuto da visualizzare nella pagina "visualisation"-->
+
+ <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualisation</title>
+    <link rel="stylesheet" type="text/css" href="generalstyle.css"> <!--foglio di stile per header e footer-->
+    <link rel="stylesheet" type="text/css" href="visualisation.css"> <!--foglio di stile per il contenuto della visualizzazione-->
+    <script src="libraries/p5.min.js"></script>
+    <script src="libraries/p5.sound.min.js"></script>
+  </head>
+  <body class="project-page">
+    <!-- Header con logo-->
+    <header class="header">
+      <img src="../logo/logoheader.png" alt="Logo" class="logo">
+    <!-- Menù di navigazione -->
+    <nav class="menu">
+      <a href="about.html">ABOUT</a>
+      <a href="parameters.html">PARAMETERS</a>
+    </nav>
+  </header>
+    <!-- Contenitore per il canvas -->
+    <main id="sketch-container"></main>
+    <!-- Footer -->
+    <footer class="footer">
+      <p>Laboratorio di Computer Grafica per l'Information Design - Politecnico di Milano</p>
+    </footer>
+    <!-- Sketch di p5.js con visualizzazione generale -->
+    <script src="sketch.js"></script>
+  </body>
+</html>
+
+

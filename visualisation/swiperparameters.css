@@ -1,0 +1,184 @@
+/*File CSS che definisce lo stile degli elementi da visualizzare all'interno della pagina "Parameters"*/
+
+/*inserimento font*/
+@font-face {
+  font-family: 'Baskerville';
+  src: url('../fonts/LibreBaskervilleRegular.ttf') format('truetype');
+}
+
+/* Box iniziale */
+.intro-box {
+  font-size: 0.9em;
+  line-height: 1.6em;
+  letter-spacing: 0.02em;
+  color: #F8FFB8;
+  margin-bottom: 5%;
+  margin-top: 2%;
+  text-align: center;
+  width: 45%;
+  margin-left: auto;
+  margin-right: auto;  
+}
+
+.center-box {
+  width: 40%;
+  padding-top:3%;
+  margin: 0 auto;  
+  margin-bottom: 10%; 
+  backdrop-filter: blur(10px);
+  border: 2px solid #F8FFB8;
+  box-shadow: 0 0 25px rgba(248, 255, 184, 0.7);
+  border-radius: 15px;
+  position: relative; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+/* Centrare il contenuto dello swiper */
+.swiper-container {
+  width: 80%;
+  padding: 4%; 
+  position: relative;
+  margin-bottom: 2%; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Slide della galleria */
+.swiper-slide {
+  font-size: 1rem;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  word-wrap: break-word;
+  line-height: 1.5em;
+  color: #F8FFB890;
+  opacity: 0;
+  transition: opacity 0.8s ease-in-out;
+  padding-bottom: 7%;
+  position: relative;
+}
+
+.swiper-slide-active {
+  opacity: 1 !important;
+  z-index: 1;
+}
+
+.swiper-slide-prev,
+.swiper-slide-next {
+  opacity: 0 !important;
+}
+
+/* Bottoni di navigazione dello swiper */
+.swiper-button-prev-small, .swiper-button-next-small {
+  position: absolute;
+  top: 50%; /* Posizione verticale al centro */
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1.8em;
+  color: #F8FFB8;
+  opacity: 0.8;
+  transition: all 0.3s ease;
+  z-index: 10; /* Sopra le slide */
+  padding: 10px;
+}
+
+/* Freccia sinistra */
+.swiper-button-prev-small {
+  left: -110px; /* Posizione a sinistra fuori dal box */
+}
+
+/* Freccia destra */
+.swiper-button-next-small {
+  right: -110px; /* Posizione a destra fuori dal box */
+}
+
+/* Hover Effect - Bagliore direttamente sul contorno della freccia */
+.swiper-button-prev-small:hover, .swiper-button-next-small:hover {
+  opacity: 1;
+  filter: drop-shadow(0 0 15px #F8FFB8) drop-shadow(0 0 20px #F8FFB8) drop-shadow(0 0 35px #F8FFB8); /* Effetto di bagliore più forte e intenso */
+  transition: filter 0.3s ease;
+}
+
+/* Highlight per categorie */
+.highlight {
+  color: #F8FFB8; 
+  font-weight: 600;
+  font-size: 1.1em;
+  line-height: 1em;
+  letter-spacing: 0.05em;
+}
+
+/* Stile del contenitore della paginazione */
+.swiper-pagination {
+  position: absolute;
+  width: 100%;
+  bottom: 10px; 
+  text-align: center;
+  z-index: 10; /* Sopra tutto il resto */
+  color: #F8FFB8;
+  font-family: 'Baskerville', serif;
+}
+
+/* Contenitore per la categoria */
+.category-container {
+  position: relative; 
+  margin-bottom: 5%;
+}
+
+/* Stile delle categorie */
+.category {
+  font-weight: regular;
+  font-size: 0.8em; 
+  color: inherit;
+  text-align: center;
+}
+
+/* Colori specifici per ogni categoria */
+.economic-rights {
+  color: #C4802075; 
+}
+
+.freedom-justice {
+  color: #87538F75;
+}
+
+.general-violence {
+  color: #6969B775; 
+}
+
+.social-rights {
+  color: #B7626375; 
+}
+
+/* Stile del numero di paginazione */
+.swiper-pagination span {
+  font-size: 0.9em; 
+  background-color: transparent; 
+  color: inherit; 
+  padding-top: 3%;
+}
+/* Stile per la freccia */
+.back-arrow {
+  position: absolute; 
+  top: 18%; 
+  left: 3%; 
+  text-decoration: none; 
+  font-size: 2rem; 
+  color: #F8FFB8; 
+}
+
+/* Effetto hover per la freccia */
+.back-arrow:hover {
+  opacity: 1;
+  filter: drop-shadow(0 0 15px #F8FFB8) drop-shadow(0 0 20px #F8FFB8) drop-shadow(0 0 35px #F8FFB8);
+  transition: filter 0.3s ease;
+}

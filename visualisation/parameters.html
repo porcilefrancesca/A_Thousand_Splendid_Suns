@@ -1,0 +1,173 @@
+ <!--File HTML che definsice il contenuto da visualizzare all'interno della pagina "Parameters"-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Parameters</title>
+  <link rel="stylesheet" href="generalstyle.css">
+  <link rel="stylesheet" href="visualisation.css">
+  <link rel="stylesheet" href="swiperparameters.css">
+  <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css"> <!-- collegamento al file CSS per galleria swiper-->
+</head>
+<body class="project-page">
+  <!-- Freccia per tornare indietro -->
+  <a href="javascript:void(0);" class="back-arrow" onclick="goBack()">←</a>
+
+  <!-- Header con logo e menu di navigazione -->
+  <header class="header">
+    <img src="../logo/logoheader.png" alt="Logo" class="logo">
+    <!-- Menu di navigazione -->
+    <nav class="menu">
+      <a href="visualisation.html">VISUALISATION</a>
+      <a href="about.html">ABOUT</a>
+    </nav>
+  </header>
+  
+  <!-- Box per il testo introduttivo -->
+  <div class="intro-box">
+    <p>
+      These parameters reflect various aspects of gender equality and the status of women in society, providing a multi-dimensional view of women’s socioeconomic, cultural and political status globally, helping identify areas where gender disparities persist and where progress has been made.
+    </p>
+  </div>
+
+  <!-- Galleria Swiper -->
+  <div class="center-box">
+    <div class="swiper-container">
+      <div class="swiper-wrapper">
+        
+        <!-- Sezione Economic Rights -->
+        <div class="swiper-slide" id="slide-1">
+          <span class="highlight">Bank account ownership</span>
+          <p>Tracks women's access to formal financial systems, essential for autonomy and participation in the economy.</p>
+          <div class="category economic-rights">Economic Rights</div>
+        </div>
+        <div class="swiper-slide" id="slide-2">
+          <span class="highlight">House ownership</span>
+          <p>Measures the percentage of women who own a house, indicating women's access to assets and financial independence.</p>
+          <div class="category economic-rights">Economic Rights</div>
+        </div>
+        <div class="swiper-slide" id="slide-3">
+          <span class="highlight">Land ownership</span>
+          <p>Indicates the proportion of women owning land, reflecting economic empowerment and inheritance rights.</p>
+          <div class="category economic-rights">Economic Rights</div>
+        </div>
+   
+        <!-- Sezione Social Rights -->
+        <div class="swiper-slide" id="slide-4">
+          <span class="highlight">Perception that a woman earning more or the same as her husband doesn’t cause problems</span>
+          <p>Gauges societal acceptance of women's economic empowerment within households.</p>
+          <div class="category social-rights">Social Rights</div>
+        </div>
+        <div class="swiper-slide" id="slide-5">
+          <span class="highlight">Perception that men shouldn't have more right to a job than women</span>
+          <p>Highlights societal attitudes toward gender equality in employment. It reflects the belief that women should have equal opportunities in the workforce, challenging traditional norms that prioritize men’s employment.</p>
+          <div class="category social-rights">Social Rights</div>
+        </div>
+        <div class="swiper-slide" id="slide-6">
+          <span class="highlight">Perception that children don’t necessarily suffer more if a mother works for pay</span>
+          <p>Reflects attitudes towards working mothers, challenging stereotypes about traditional gender roles.</p>
+          <div class="category social-rights">Social Rights</div>
+        </div>
+        <div class="swiper-slide" id="slide-7">
+          <span class="highlight">Perception that men don't necessarily make better business executives than women</span>
+          <p>Captures gender biases in professional leadership and workplace equality.</p>
+          <div class="category social-rights">Social Rights</div>
+        </div>
+
+        <!-- Sezione Freedom & Justice -->
+       <div class="swiper-slide" id="slide-8">
+        <span class="highlight">Feeling of safety at night</span>
+        <p>Indicates women’s perception of public safety, a key factor for mobility and freedom.</p>
+        <div class="category freedom-justice">Freedom & Justice</div>
+      </div>
+      <div class="swiper-slide" id="slide-9">
+        <span class="highlight">Confidence in the Judicial System and courts</span>
+        <p>Indicates trust in legal institutions to protect women's rights and ensure justice.</p>
+        <div class="category freedom-justice">Freedom & Justice</div>
+      </div>
+      <div class="swiper-slide" id="slide-10">
+        <span class="highlight">Perception that men aren’t necessarily better political leaders than women</span>
+        <p>Measures beliefs about women’s leadership capabilities, crucial for political representation.</p>
+        <div class="category freedom-justice">Freedom & Justice</div>
+      </div>
+ 
+    <!-- Sezione General Violence -->
+        <div class="swiper-slide" id="slide-11">
+          <span class="highlight">Women who didn’t undergo child marriage</span>
+          <p>Shows the percentage of women married after the legal or socially accepted age, highlighting progress in protecting girls’ rights.</p>
+          <div class="category general-violence">General Violence</div>
+        </div>
+        <div class="swiper-slide" id="slide-12">
+          <span class="highlight">Women who didn’t undergo FGM</span>
+          <p>Measures the prevalence of Female Genital Mutilation (FGM) avoidance, an important marker of bodily autonomy and health rights.</p>
+          <div class="category general-violence">General Violence</div>
+        </div>
+        <div class="swiper-slide" id="slide-13">
+          <span class="highlight">Perception that FGM should stop</span>
+          <p>Reflects societal awareness and rejection of harmful traditional practices in Female Genital Mutilation (FGM).</p>
+          <div class="category general-violence">General Violence</div>
+        </div>
+        <div class="swiper-slide" id="slide-14">
+          <span class="highlight">Perception that a husband is not justified in hitting or beating his wife under any circumstances</span>
+          <p>Highlights attitudes toward domestic violence and <br> gender-based abuse.</p>
+          <div class="category general-violence">General Violence</div>
+        </div>
+      </div>
+    </div>
+      <!-- Contenitore per la paginazione (numero della slide) -->
+      <div class="swiper-pagination"></div>
+      <!-- Bottoni di navigazione -->
+      <div class="swiper-button-prev-small"><</div>
+      <div class="swiper-button-next-small">></div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>Laboratorio di Computer Grafica per l'Information Design - Politecnico di Milano</p>
+  </footer>
+
+  <!-- Swiper JS -->
+  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+  <script>
+    // Legge il parametro "slide" dalla query string
+    const urlParams = new URLSearchParams(window.location.search);
+    const slideParam = urlParams.get('slide'); // Esempio: ?slide=7
+    const initialSlide = slideParam ? parseInt(slideParam) - 1 : 0; // Calcola l'indice della slide
+
+    const swiper = new Swiper('.swiper-container', {
+      loop: true,
+      effect: 'fade',
+      fadeEffect: {
+        crossFade: true,
+      },
+      pagination: {
+        el: '.swiper-pagination',
+        type: 'fraction',
+        renderFraction: (currentClass) => {
+          return '<span class="' + currentClass + '"></span>';
+        },
+      },
+      navigation: {
+        nextEl: '.swiper-button-next-small',
+        prevEl: '.swiper-button-prev-small',
+      },
+      slidesPerView: 1,
+      spaceBetween: 0,
+      touchAngle: 45,
+      speed: 700,
+      initialSlide: initialSlide, // Imposta la slide iniziale in base al parametro
+    });
+
+    // Funzione per tornare indietro
+    function goBack() {
+      history.back();
+    }
+  </script>
+</body>
+</html>
+
+
+

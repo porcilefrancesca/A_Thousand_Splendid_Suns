@@ -1,0 +1,134 @@
+/* File CSS che definisce lo stile degli elementi da visualizzare all'interno dell'index */
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 160%;
+  height: 160%;
+  background-color: rgba(6, 1, 30, 0.83);
+  z-index: -1;
+  pointer-events: none;
+}
+
+body.home {
+  background-image: url('logo/indexsfondo.jpg'); /* immagine di sfondo */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: #F8FFB8;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  padding-top: 5vh;
+  overflow: hidden;
+}
+
+.home-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+  margin-top: 2vh;
+}
+
+.logo {
+  width: 60%;
+  height: auto;
+  margin-bottom: 0.5vh;
+}
+
+.subtitle {
+  font-size: 1.5vw;
+  color: #F8FFB8;
+  padding-bottom: 1vh;
+  margin-left: 0.5vw;
+  font-weight: 300;
+  text-align: center;
+  padding-top: 4vh;
+}
+
+button {
+  background-color: #06011E;
+  color: #F8FFB8;
+  border: 0.2vw solid #F8FFB8; 
+  border-radius: 1vw;
+  padding: 1vw 3vw;
+  font-size: 1.2vw; 
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  margin-top: 2vw;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  font-family: 'LibreBaskerville Regular', serif;
+}
+
+button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 1vw #F8FFB8;
+}
+
+button:active {
+  box-shadow: 0 0 1.5vw #F8FFB8;
+  transform: scale(1.05);
+}
+
+/* Animazione zoom e opacità */
+@keyframes zoomAndFade {
+  0% {
+    background-size: 140%; 
+    opacity: 1;
+  }
+  100% {
+    background-size: 3000%;
+    opacity: 0.2;
+  }
+}
+
+body.zoom-animation {
+  animation: zoomAndFade 1s ease-in-out forwards;
+}
+
+.hide-elements {
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+
+/* Stili per dispositivi mobili */
+@media screen and (max-width: 480px) {
+  body.home {
+    padding-top: 3vh;
+    background-size: cover;
+    background-position: center;
+  }
+
+  .home-container {
+    margin-top: 1vh;
+    width: 90%;
+    padding: 0 5%;
+  }
+
+  .logo {
+    width: 80%; /* Ridurre la dimensione del logo */
+    margin-bottom: 2vh;
+  }
+
+  .subtitle {
+    font-size: 5vw; /* Adattare la dimensione del testo */
+    padding-top: 2vh;
+    padding-bottom: 2vh;
+  }
+
+  button {
+    padding: 4vw 6vw; /* Bottoni più grandi su schermi piccoli */
+    font-size: 5vw;
+    border-radius: 2vw;
+    margin-top: 4vh;
+  }
+}

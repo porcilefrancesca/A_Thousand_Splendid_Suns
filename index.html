@@ -1,0 +1,46 @@
+<!--File HTML che definisce il contenuto da visualizzare dell'index-->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Thousand Splendid Suns</title>
+    <link rel="stylesheet" href="index.css">
+  </head>
+
+  <body class="home">
+    <div class="overlay"></div>
+    <div class="home-container">
+      <img src="logo/logoindex.png" alt="Logo" class="logo"> 
+      <div class="subtitle">Exploring women's condition through data storytelling</div>
+      <button class="btn" onclick="redirectToVisualisation()">Go to Visualisation</button> <!--bottone per aprire la pagina "visualisation"-->
+    </div>
+  
+
+    <script>
+      //script per animazione effetto zoom una volta cliccato il bottone
+      function redirectToVisualisation() {
+        document.body.classList.add("zoom-animation");
+        document.querySelector('.home-container').classList.add("hide-elements");
+
+        setTimeout(function() {
+          window.location.href = 'visualisation/visualisation.html';
+        }, 1000);
+      }
+    </script>
+  </body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+

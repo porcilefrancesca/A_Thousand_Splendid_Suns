@@ -1,0 +1,107 @@
+/* File CSS che definisce lo stile di tutti gli elementi da visualizzare all'interno della pagina "About" */
+
+/* Inserimento font */
+@font-face {
+  font-family: 'LibreBaskerville';
+  src: url('../fonts/LibreBaskervilleRegular.ttf') format('truetype');
+  font-style: normal;
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: 'LibreBaskerville Italic';
+  src: url('../fonts/LibreBaskervilleItalic.ttf') format('truetype');
+  font-style: italic;
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: 'LibreBaskerville Bold';
+  src: url('../fonts/LibreBaskervilleBold.ttf') format('truetype');
+  font-style: normal;
+  font-weight: bold;
+}
+
+/* Stile per il testo in Libre Baskerville Italic */
+.libre-baskerville-italic {
+  font-family: 'LibreBaskerville Italic', serif;
+  font-size: 1.1em; 
+}
+
+/* Stile per il testo in Libre Baskerville Bold */
+.libre-baskerville-bold {
+  font-family: 'LibreBaskerville Bold', serif;
+  font-size: 0.9em;
+}
+
+/* Stile per il contenitore del testo */
+.text-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center; 
+  padding-top: 7%;
+  height: auto;
+}
+
+/* Stile per la sezione del testo */
+.text {
+  width: 40%; /* Larghezza predefinita del testo */
+  color: #f8ffb890;
+  font-size: 1.0em;
+  line-height: 1.6em;
+  letter-spacing: 0.02em; 
+  margin: 0 auto; 
+}
+
+.title {
+  font-family: 'LibreBaskerville Italic', serif;
+  font-size: 1.5rem; 
+  margin-bottom: 5%; 
+  color: #F8FFB8; 
+  font-weight: 500; 
+}
+
+.subtitle {
+  font-family: 'LibreBaskerville Italic', serif;
+  font-size: 1.1rem;
+  margin-bottom: 3%; 
+  color: #F8FFB8; 
+  font-weight: 500; 
+}
+
+.section {
+  margin-bottom: 15%; /* Aggiunge distanza tra ogni sezione */
+}
+
+.text p {
+  margin-bottom: 6%; /* Spazio tra i paragrafi all'interno di ogni sezione */
+}
+
+/* Media query per dispositivi mobili */
+@media screen and (max-width: 480px) {
+  .text {
+    width: 60%; /* Cambia la larghezza del testo al 60% per schermi piccoli */
+    font-size: 0.9em; 
+    padding: 0 5%; 
+  }
+
+  .title {
+    font-size: 1.2rem; 
+  }
+
+  .subtitle {
+    font-size: 1rem; 
+  }
+
+  .section {
+    margin-bottom: 10%; 
+  }
+}
+
+
+
+
+
+  
+  

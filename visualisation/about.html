@@ -1,0 +1,70 @@
+ <!--File HTML che definsce il contenuto da visualizzare all'interno della pagina "About"  -->
+
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About</title>
+  <link rel="stylesheet" href="generalstyle.css">
+  <link rel="stylesheet" href="about.css">
+</head>
+<body class="project-page">
+<!-- Header con logo-->
+  <header class="header">
+    <img src="../logo/logoheader.png" alt="Logo" class="logo">
+
+<!-- Menu di navigazione -->
+    <nav class="menu">
+      <a href="visualisation.html">VISUALISATION</a>
+      <a href="parameters.html">PARAMETERS</a>
+    </nav>
+  </header>
+  
+<!-- Spazio per il testo, organizzato in un'unica colonna centrale -->
+  <div class="text-container">
+    <div class="text">
+ <!-- Contenitore di testo sul Progetto, suddiviso in paragrafi e sezioni -->     
+      <div class="section">
+        <h2 class="title">About the project</h2>
+        <p><span class="libre-baskerville-italic">A Thousand Splendid Suns</span> is an Information Design project that transforms complex data into visually meaningful and engaging narratives.</p>
+        <p><span class="libre-baskerville-italic">A Thousand Splendid Suns</span> highlights how environments, family, society and culture shape individual opportunities and perceptions, often in unequal ways. Specifically, in patriarchal societies, systemic discrimination against women persists.</p>
+        <p>Inspired by Khaled Hosseini’s novel "A Thousand Splendid Suns", the project reflects universal challenges women face under patriarchal systems. The novel explores the lives of two Afghan women bound by patriarchal structures that, despite their distinct backgrounds, share a universal struggle against the control exerted by societal and familial expectations. Hosseini captures the dynamic through the lens of female strength and endurance under oppressive systems, reflecting the broader challenges faced by women worldwide. Borrowing from Saib-e-Tabrizi’s 17th-century poem, the title symbolizes resilience, hope and women’s inherent societal value. The project’s dual focus celebrates achievements while emphasizing the need for transformative change.</p>
+        <p>Using data exclusively from women aged 15 and above, <span class="libre-baskerville-italic">A Thousand Splendid Suns</span> provides a global overview of women’s conditions, focusing on both practical realities and cultural perceptions. The dataset, drawn from the OECD Gender, Institutions and Development Database and 2023 contributions by SIGI, UNICEF, the United Nations and the World Health Organization, measures two critical aspects:</p>
+        <h3 class="subtitle">Practical Realities</h3>
+        <p>Access to financial services, safety and rights.</p>
+        <h3 class="subtitle">Cultural Perceptions</h3>
+        <p>Attitudes toward gender-based violence, equality and women’s societal valuation.</p>
+      </div>
+ <!-- Contenitore di testo sulla visualizzazione, suddiviso in paragrafi e sezioni -->
+      <div class="section">
+        <h2 class="title">About the visualisation</h2>
+        <p>Inspired by Khaled Hosseini’s novel, <span class="libre-baskerville-italic">A Thousand Splendid Suns</span> uses a geographic representation to bring the dataset to life. Each country is represented as a sun, with its brightness symbolising progress in economic participation, safety and representation. Luminous suns highlight areas where women experience better conditions, while darker ones reveal significant barriers. This metaphor transforms abstract data into an intuitive depiction of global disparities and progress. The project employs a two-layer visualisation system to effectively represent the data: </p>
+        <h3 class="subtitle">Global visualisation</h3>
+        <p>The global view displays each country as a dot, geographically arranged. The brightness of each dot reflects the average performance across all parameters measured. Countries with incomplete data appear dimmer, regardless of their actual conditions, revealing data gaps while still illustrating the state of women’s rights. Clicking on a dot transitions to the second visualisation layer, offering a more detailed visualisation for the selected country.</p>
+        <h3 class="subtitle">Individual visualisation</h3>
+        <p>At the country level, each sun becomes a detailed glyph with 14 rays, each corresponding to one parameter and grouped into four quadrants, each representing a thematic area of the dataset. The length and color of each ray represent the percentage score for the parameter. Fully extinguished rays indicate a lack of data for that parameter. Hovering over a ray displays the parameter name, while clicking directs users to a page with a detailed explanation of the parameter.</p>
+        <p>This dual-layer approach allows users to explore both a broad global overview and a detailed analysis of individual countries. Together, the visualisations foster a deeper understanding of women’s conditions worldwide, shining a light on both inequalities and progress.</p>
+        <p>Through this initiative, we aim to turn raw data into a realistic narrative that fosters reflection and inspires efforts to improve women’s conditions. By translating data into visualisation, the project makes abstract inequalities tangible and to turn raw data into a realistic and compelling narrative, offering a clear understanding of the challenges women face worldwide and inspiring efforts to improve female conditions.</p>
+      </div>
+ <!-- Contenitore di testo sui membri del team e i rispettivi compiti svolti, suddiviso in paragrafi e sezioni -->
+        <div class="section">
+        <h2 class="title">About us</h2>
+        <p>We are six students from Politecnico di Milano, united by our passion for creativity, technology and innovation.
+          As design students, we developed this project during the Computer Graphics for Information Design course. Together, we have transformed complex data into visually meaningful and engaging narratives.
+          Each of us brings unique skills to the table:
+          Francesca and Syria took care of the visual design and developed the HTML, CSS and JavaScript code for the entire website. 
+          Arianna and Marta managed dataset processing, content research and concept development. 
+          Giacinta and Chiara were responsible for creating the entire p5.js code, from the overall visualisation to the design of the individual suns.</p>
+      </div>
+    </div>
+  </div>
+</body>
+  
+  <!-- Footer -->
+  <footer class="footer">
+    <p>Laboratorio di Computer Grafica per l'Information Design - Politecnico di Milano</p>
+  </footer>
+</body>
+</html>
+

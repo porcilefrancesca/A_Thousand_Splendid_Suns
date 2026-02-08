@@ -1,0 +1,96 @@
+/* File CSS che definisce lo stile di tutti gli elementi generali dell'intero sito */
+
+/* Inserimento font */
+@font-face {
+  font-family: 'Baskerville';
+  src: url('../fonts/LibreBaskervilleRegular.ttf') format('truetype');
+}
+
+/* Stile per il corpo */
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #06011E; 
+  color: #F8FFB8;
+  font-family: 'Baskerville', serif; 
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Stile per l'header */
+.header {
+  background-color: #06011E;
+  text-align: left;
+  padding: 4vh 1vw;
+  height: 8vh;
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Mantiene spazio tra logo e menu */
+}
+
+/* Logo dentro l'header */
+.logo {
+  width: 30vw;
+  height: auto;
+  padding-left: 2vw;
+  padding-top: 2vh;
+}
+/* Menu di navigazione */
+nav {
+  display: flex;
+  justify-content: center;
+  gap: 1.5vw;
+  flex-wrap: wrap; /* Permette al menu di andare su più righe se necessario */
+  margin-right: 2vw; 
+  margin-top: 3vh;
+}
+
+/* Stile dei link nel menù */
+nav a {
+  color: #F8FFB8;
+  text-decoration: none !important; /* Rimuove ogni decorazione */
+  font-size: 0.8em;
+  margin-right: 0.2vw; /* Aggiunge uno spazio tra ogni link */
+  transition: text-shadow 0.3s ease, transform 0.1s ease;
+}
+
+/* Effetto bagliore quando si passa sopra alle voci del menù */
+nav a:hover {
+  text-shadow: 0 0 50px #F8FFB8, 0 0 20px rgba(248, 255, 184, 0.3), 0 0 25px rgba(248, 255, 184, 0.8); 
+  text-decoration: none !important; /* Assicura che non appaia decorazione anche in hover */
+}
+
+
+/* Contenitore per lo sketch */
+#sketch-container {
+  flex: 1; /* Occupa tutto lo spazio disponibile tra header e footer */
+  position: relative;
+  background-color: #06011E; 
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  padding: 1% 0;
+  font-size: 0.6em;
+  color: #F8FFB8;
+}
+
+/* Stile responsivo */
+@media (max-width: 768px) {
+  /* Menu di navigazione su schermi piccoli */
+  nav {
+    gap: 3vw; /* Riduce lo spazio tra gli elementi del menu */
+  }
+
+  nav a {
+    font-size: 0.7em; /* Riduce leggermente la dimensione del testo */
+  }
+
+  /* Modifica dell'header */
+  .header {
+    height: auto; /* Permette all'altezza di adattarsi al contenuto */
+  }
+}
+
