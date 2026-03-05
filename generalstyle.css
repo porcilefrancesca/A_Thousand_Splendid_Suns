@@ -1,0 +1,252 @@
+/* =========================
+    VARIABILI GLOBALI
+   ========================= */
+:root {
+    --bg-color: #06011E;
+    --primary-color: #F8FFB8;
+    --text-opacity: rgba(248, 255, 184, 0.6);
+    --glow-opacity: rgba(248, 255, 184, 0.25);
+    
+    --header-height: 100px;    
+    --menu-separation: 0px; 
+}
+
+/* =========================
+    CARICAMENTO FONT
+   ========================= */
+@font-face {
+    font-family: 'LibreBaskerville Italic';
+    src: url('../fonts/LibreBaskervilleItalic.ttf') format('truetype');
+}
+
+/* =========================
+    RESET E BASI
+   ========================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--primary-color);
+    font-family: 'Inconsolata', monospace;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    overflow-x: hidden;
+    scrollbar-gutter: stable;
+}
+
+/* =========================
+    HEADER & LOGO 
+   ========================= */
+.header {
+    display: flex;
+    align-items: center;   /* CENTRATURA VERTICALE CORRETTA */
+    justify-content: space-between;
+    padding: 0 32px;
+    position: relative;
+    z-index: 2000;
+    background-color: var(--bg-color);
+    flex-shrink: 0;
+    height: var(--header-height);
+    width: 100%;
+}
+
+.logo-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    transition: opacity 0.4s ease;
+}
+
+.logo-wrapper::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 140%;
+    height: 35px;
+    background: var(--primary-color);
+    border-radius: 5%;
+    filter: blur(50px);
+    opacity: 0.20;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.logo { 
+    height: clamp(20px, 4.5vw, 42px);
+    width: auto;
+    position: relative;
+    z-index: 2;
+    filter: drop-shadow(0 0 2px rgba(248, 255, 184, 0.2));
+}
+
+/* =========================
+    HAMBURGER ICON
+   ========================= */
+.hamburger {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    width: 30px;
+    height: 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    z-index: 2501;
+    transition: opacity 0.3s ease;
+}
+
+.hamburger span {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background-color: var(--primary-color);
+    border-radius: 4px;
+}
+
+/* =========================
+    HAMBURGER MENU 
+   ========================= */
+.hamburger-menu {
+    position: absolute;
+    top: calc(var(--header-height) - 15px);
+    right: 32px;  /* stesso padding dell’header */
+    min-width: 150px;
+    width: max-content;
+    display: flex;
+    flex-direction: column;
+    z-index: 2500;
+
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-10px);
+    
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.hamburger-menu.active {
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    transform: translateY(0) !important;
+}
+
+.hamburger-menu a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 42px; 
+    width: 100%;
+    padding: 0 20px;
+    background-color: var(--bg-color); 
+    color: var(--primary-color);
+    text-decoration: none;
+    font-size: 0.85rem;
+    border: 1.5px solid var(--primary-color);
+    border-bottom: none; 
+    box-sizing: border-box;
+    transition: text-shadow 0.3s ease, background-color 0.3s ease;
+}
+
+.hamburger-menu a:first-child { border-radius: 4px 4px 0 0; }
+.hamburger-menu a:last-child { 
+    border-bottom: 1.5px solid var(--primary-color); 
+    border-radius: 0 0 4px 4px; 
+}
+
+.hamburger-menu a:hover {
+    text-shadow: 0 0 10px var(--primary-color), 0 0 20px rgba(248, 255, 184, 0.5);
+    background-color: #120e26; 
+}
+
+/* =========================
+    REGOLE OSCURAMENTO (BACKDROP)
+   ========================= */
+#menu-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(6, 1, 30, 0.7);
+    z-index: 1500; 
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+}
+
+#menu-backdrop.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.content-dimmed {
+    opacity: 0.5 !important; 
+    pointer-events: none !important;
+    filter: blur(2px);
+    transition: opacity 0.4s ease !important;
+}
+
+/* =========================
+    TOOLTIP
+   ========================= */
+.col-info { 
+    position: relative; 
+    cursor: help; 
+    display: inline-block;
+}
+
+.tooltip-text {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    margin-top: 10px;
+    width: 180px;
+    background: #06011E;
+    color: #F8FFB8;
+    border: 1.5px solid #F8FFB8;
+    padding: 12px;
+    border-radius: 4px;
+    z-index: 9999; 
+    font-family: sans-serif;
+    font-size: 0.9em;
+    line-height: 1.3;
+    text-align: center; 
+    white-space: normal;
+    text-transform: none;
+    pointer-events: none;
+}
+
+.col-info:hover .tooltip-text { 
+    display: block; 
+}
+
+/* =========================
+    FOOTER
+   ========================= */
+.footer {
+    width: 100%;
+    text-align: center;
+    padding: 10px 0; 
+    margin-top: auto; 
+    margin-bottom: 6px; 
+    font-size: 0.75rem; 
+    color: var(--primary-color);
+    opacity: 0.45;
+    flex-shrink: 0;
+    transition: opacity 0.4s ease; 
+}
+
+.footer em { 
+    font-family: 'LibreBaskerville Italic', serif; 
+    font-style: italic; 
+    font-weight: 500; 
+}

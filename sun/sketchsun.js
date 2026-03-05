@@ -2,13 +2,21 @@ let data;
 let dataObj;
 let poppinsRegular;
 let inconsolataRegular;
+let topics;
 let baskerville;
 let RegularBaskerville;
 let cambiamento = true;
 
-let activeRay = -1;  // Nessun raggio attivo inizialmente
+let activeRay = -1; 
+let wasOverBack = false; 
+let isClicked = false; 
 
-//testi che ritroviamo a sinistra quando si fa il mouseover
+const COLORS = {
+  economic: "#6f66a0", 
+  social:   "#6f66a0", 
+  freedom:  "#6f66a0", 
+  violence: "#6f66a0"  
+};
 
 let spicchiText = [
   "Perception that a woman earning_more or the same as her husband_doesn't cause any problems",
@@ -26,8 +34,6 @@ let spicchiText = [
   "House ownership",
   "Land ownership",
 ];
-
-//collegamento alle slide con le spiegazioni dei paramentri
 
 let spicchiLink = [
   "../visualisation/parameters.html?slide=4",
@@ -48,183 +54,136 @@ let spicchiLink = [
 
 function preload() {
   data = loadTable("../assets/data.csv", "csv", "header");
- // poppinsRegular = loadFont('assets/Poppins-Regular.ttf');
   inconsolataRegular = loadFont('../fonts/Inconsolata-Regular.ttf');
-  baskerville = loadFont ('../fonts/LibreBaskervilleItalic.ttf');
-  RegularBaskerville = loadFont ('../fonts/LibreBaskervilleRegular.ttf');
-  legendaUno = loadImage("../assets/legendaSoleDefinitiva.png");
+  baskerville = loadFont('../fonts/LibreBaskervilleItalic.ttf');
+  RegularBaskerville = loadFont('../fonts/LibreBaskervilleRegular.ttf');
 }
 
 function setup() {
-  //noLoop();
-  window.totalWidth = windowWidth * 0.950;
-  window.totalHeight = windowHeight * 0.950;
-  createCanvas(totalWidth, totalHeight);
+  let container = document.getElementById('sketch-holder');
+  let canvas = createCanvas(container.offsetWidth, container.offsetHeight);
+  canvas.parent('sketch-holder');
   
-    //sistemo il dataset per avere a diposizione i dati per ciascun Paese
-    window.nazioni = {} 
-    console.log(data);
-    for (let r of data["rows"]) {
-      let riga = r["obj"];
+  window.totalWidth = width;
+  window.totalHeight = height;
   
-      let nomeC = riga ["Country"];
-  
-      if (!(nomeC in nazioni)){
-        nazioni[nomeC] = {
-          "nome" : nomeC,
-          "continent" : riga ["Country"],
-          "area" : riga ["Area"],
-          "average" : riga ["Average"],
-        };    
-      }
-      nazioni[nomeC][riga["Parameter"]] = riga ["Value"];
+  window.nazioni = {}; 
+  for (let r of data["rows"]) {
+    let riga = r["obj"];
+    let nomeC = riga["Country"];
+    if (!(nomeC in nazioni)){
+      nazioni[nomeC] = {
+        "nome": nomeC,
+        "continent": riga["Country"],
+        "area": riga["Area"],
+        "average": riga["Average"],
+      };    
     }
+    nazioni[nomeC][riga["Parameter"]] = riga["Value"];
+  }
+      
+  window.size = 4/16 * totalWidth;
+  window.xPos = 11/16 * totalWidth; 
+  window.yPos = totalHeight / 2;
   
-    console.log(nazioni);
-     
-    window.size = 5/16*totalWidth;
-    window.xPos = 11/16*totalWidth;
-    window.yPos = totalHeight/2;
-    
-    window.centerX = 11/16*totalWidth;
-    window.centerY = totalHeight/2;
-
-    window.indiceSpicchio = -1;
-   
+  window.centerX = window.xPos;
+  window.centerY = window.yPos;
+  window.indiceSpicchio = -1;
 }
 
-//funzione che mi permette di andare alle spiegazioni più approfondite dei parametri
-function mouseClicked() {
-  
-  if(indiceSpicchio >= 0) {
+function mousePressed() {
+  if (indiceSpicchio >= 0) {
+    isClicked = true;
+    cambiamento = true;
+  }
+}
+
+function mouseReleased() {
+  if (isClicked && indiceSpicchio >= 0) {
     window.location.href = spicchiLink[indiceSpicchio];
   }
-
+  isClicked = false;
+  cambiamento = true;
 }
 
 function draw() {
-
-  
-  ////////////////// RECUPERO DATI ////////////////////
-  // Recupera i parametri dall'URL
   let params = getURLParams();
   let country = params['country']; 
-  
-  // Seleziona il primo paese nel dataset
-  let paese = nazioni[country];  // Prendi il primo paese nel dataset
+  let paese = nazioni[country]; 
 
   angleMode(RADIANS);
-   mouseOverReaction(size);
+  mouseOverReaction(size);
 
- 
-   
-
-   ///////////////// DISEGNO ///////////////////
-
-   if (cambiamento){
-    
+  if (cambiamento) {
     background("#06011E");  
-    angleMode(RADIANS);
+    
     disegnaCerchi(xPos, yPos, size, paese);
-    angleMode(RADIANS);
+    disegnaScala(xPos, yPos, size); 
 
-    if(indiceSpicchio >= 0){
-      cursor("pointer");
-      // Mostriamo la scritta corrispondente
-    fill("#F8FFB8");
-    noStroke();
-    textFont(RegularBaskerville);
-    textSize (size *0.04)
+    let leftMargin = totalWidth * 0.08; 
+
+    push();
     textAlign(LEFT, TOP);
-    let stringhetta = spicchiText[indiceSpicchio].replace(/_/g, '\n');
-    text(stringhetta, xPos - 12.8/16*xPos, (totalHeight/2 - 8/50*size));
-    }
-    else {
-      fill(255, 255, 191, 70);
+    textSize(size * 0.15); 
+    textFont(inconsolataRegular);
+    fill(248, 255, 184);
+    let myString = paese["nome"].replace(/_/g, " ");
+    text(myString, leftMargin, totalHeight * 0.08); 
+    pop();
+
+    push();
+    let textYPos = totalHeight * 0.08 + (size * 0.22); 
+    textFont(inconsolataRegular);
+    textAlign(LEFT, TOP);
+    textSize(size * 0.05); 
+
+    if (indiceSpicchio >= 0) {
+      cursor("pointer");
+      fill("#F8FFB8");
       noStroke();
-      textFont(RegularBaskerville);
-      textSize (size *0.04)
-      textAlign(LEFT, TOP);
-      let scrittaInizio = "Hover over the rays with your mouse_to view the parameters names._Click on the rays to learn more.".replace(/_/g, '\n');
-      text(scrittaInizio, xPos - 12.8/16*xPos, (totalHeight/2 - 8/50*size));
+      let stringhetta = spicchiText[indiceSpicchio].replace(/_/g, '\n');
+      text(stringhetta, leftMargin, textYPos);
+    } else {
       cursor("default");
+      fill(255, 255, 191, 140);
+      noStroke();
+      let scrittaInizio = "Hover over the rays with your mouse_to view the parameters names._Click on the rays to learn more.".replace(/_/g, '\n');
+      text(scrittaInizio, leftMargin, textYPos);
     }
-  
-    
-    // Passa il paese alla funzione disegnaSole
-   disegnaSole(xPos, yPos, size, paese);
-   
-   //disegnaSole (xPos,yPos, size, nazioni[nomeC]);
- 
-   ilGrandeNome (xPos, totalHeight, size, paese, baskerville);
+    pop();
 
-   
-   let scaleFactor = 0.00155*size;
-   let scaledWidth = legendaUno.width * scaleFactor;
-   let scaledHeight = legendaUno.height * scaleFactor;
-   image(legendaUno, xPos-12.8/16*xPos, windowHeight - 21.6/16*legendaUno.height, scaledWidth, scaledHeight);
- 
-   // ----------------------- testi curvi ---------------------------------
-   testoCurvoEconomic (xPos, yPos, size);
-   testoCurvoSocial (xPos, yPos, size);
-   testoCurvoFree (xPos, yPos, size);
-   testoCurvoViolence (xPos, yPos, size);
-   //--------------------------------------------------------------------- 
-   cambiamento = false
+    angleMode(RADIANS);
+    disegnaSole(xPos, yPos, size, paese);
+
+    let raggioTesto = size * 17 / 26; 
+    let arcoGradi = 360/14;
+    let offAlpha = 90; 
+
+    let colEco = (indiceSpicchio >= 11 && indiceSpicchio <= 13) ? COLORS.economic : color(111, 102, 160, offAlpha);
+    disegnaTestoCurvo(xPos, yPos, raggioTesto, "Economic rights", arcoGradi * 11.4, arcoGradi * 12.7, colEco, false);
+
+    let colVio = (indiceSpicchio >= 7 && indiceSpicchio <= 10) ? COLORS.violence : color(111, 102, 160, offAlpha);
+    disegnaTestoCurvo(xPos, yPos, raggioTesto, "General Violence", arcoGradi * 7.7, arcoGradi * 9.2, colVio, false);
+
+    let colSoc = (indiceSpicchio >= 0 && indiceSpicchio <= 3) ? COLORS.social : color(111, 102, 160, offAlpha);
+    disegnaTestoCurvo(xPos, yPos, raggioTesto, "Social rights", arcoGradi * 0.85, arcoGradi * 2.15, colSoc, true);
+
+    let colFre = (indiceSpicchio >= 4 && indiceSpicchio <= 6) ? COLORS.freedom : color(111, 102, 160, offAlpha);
+    disegnaTestoCurvo(xPos, yPos, raggioTesto, "Freedom and Justice", arcoGradi * 4.25, arcoGradi * 5.85, colFre, true);
+
+    cambiamento = false;
   }
-   
-
 }
 
-
-//funzione per far funzionare il mouseover
-function mouseOverReaction(size) {
-  let nuovoValoreIndiceSpicchio = -1;
-
-  let distanza = dist(mouseX, mouseY, centerX, centerY);
-  console.log(size, distanza)
-
-  // Se il mouse è dentro il cerchio
-  if (distanza < size/2) {
-    // Calcoliamo l'angolo in radianti
-    let angolo = atan2(mouseY - centerY, mouseX - centerX);
-    
-    // Convertiamo l'angolo da radianti a gradi
-    let angoloGradi = degrees(angolo);
-    
-    // Normalizziamo l'angolo per farlo variare tra 0 e 360
-    if (angoloGradi < 0) {
-      angoloGradi += 360;
-    }
-    
-    // Aggiungiamo l'offset all'angolo e mappiamo l'angolo in gradi a uno degli spicchi (14 spicchi)
-    angoloGradi = (angoloGradi + 360/28) % 360;  // Ruotiamo gli spicchi
-    nuovoValoreIndiceSpicchio = floor(map(angoloGradi, 0, 360, 0, 14)) % 14;
-
-  } 
-
-  //imposta il valore se appena sopra è cambiato
-  if(nuovoValoreIndiceSpicchio != window.indiceSpicchio) {
-    window.indiceSpicchio = nuovoValoreIndiceSpicchio;
-    cambiamento = true;
-  }
-  
-}
-
-//funzione che disegna il pallino centrale e imposta i raggi
-function disegnaSole (x, y, size, nazione){
-  
+function disegnaSole(x, y, size, nazione) {
+  push();
   noStroke();
-  fill("#F8FFB8");
-  //ellipse(x, y, size/7, size/7);
-
-   for (let e = size/7; e > 0; e -= 2) {
-    let alpha = map(e, size, 0,100, 70); // Gradiente di trasparenza
-    fill(248, 255, 184, alpha); // Colore giallo con opacità variabile
-    ellipse(x, y, e, e); // Cerchi concentrici
+  for (let e = size / 7; e > 0; e -= 2) {
+    let alpha = map(e, size / 7, 0, 30, 150); 
+    fill(248, 255, 184, alpha);
+    ellipse(x, y, e, e);
   }
 
-  // Disegnare ogni raggio separatamente
   drawRay(11, nazione["Bank account ownership"], size);
   drawRay(12, nazione["House ownership"], size);
   drawRay(13, nazione["Land ownership"], size);
@@ -239,448 +198,220 @@ function disegnaSole (x, y, size, nazione){
   drawRay(8, nazione["Non genital-mutilated women percentage"], size);
   drawRay(9, nazione["Perception that female genital mutilation should stop"], size);
   drawRay(10, nazione["Perception that a husband is not justified in hitting or beating his wife under any circumstances"], size);
-
+  pop();
 }
 
-//funzione che disegna i raggi base (quindi non gli aloni) e scrive le percentuali
 function drawRay(index, rayLengthData, size) {
-
   drawSecondRay(index, rayLengthData, size);
-  
-  noStroke();
-  fill(255, 255, 191, 100)
-  //fill(248, 255, 184)
+
   let rayLength = parseInt(rayLengthData);
-  if(isNaN(rayLength)) {
-    
-    rayLength = 100;
-     // Crea il colore #F8FFB8 con trasparenza (ad esempio alpha = 128)
-  let c = color(248, 255, 184, 2); // RGB (248, 255, 184) con alpha 128
-  
-  fill(c); // Applica il colore con trasparenza
-  
-    
-    
+  let isNone = false;
+  let isHover = (index == window.indiceSpicchio);
+
+  if (isNaN(rayLength) || rayLengthData === "none") {
+    rayLength = 100; 
+    isNone = true;
   }
-   
-  let numRays = 14; 
-  let angleStep = TWO_PI / numRays; // Passo angolare per distribuire i raggi in modo uniforme
-  
-  let angle = angleStep * index; // Calcola l'angolo per il raggio corrente
 
-  // Posizione iniziale dei cerchi (i raggi partono da una distanza maggiore dal centro)
-  let x1 = centerX + cos(angle) * size/10; // Aggiustiamo la distanza dal centro (partono più distanti)
-  let y1 = centerY + sin(angle) * size/10; // Aggiustiamo la distanza dal centro (partono più distanti)
-  
-  let minRadius = 0/500*size;  // Raggio minimo per il primo cerchio
-  let maxRadius = 8/500*size;  // Raggio massimo per l'ultimo cerchio
-  
-  
-  // Ciclo per disegnare i cerchi lungo il raggio
-  for (let j = 0; j < rayLength * size/160; j++) {
-    //let radius = map(j, 0, rayLength, minRadius, maxRadius); // Raggio che cresce lungo il raggio
-    let radius = map(j, 0, rayLength * 17 / 4, minRadius, maxRadius);
-    let distance = j * 2 / 4; // La distanza tra i cerchi lungo il raggio
+  let numRays = 14;
+  let angleStep = TWO_PI / numRays;
+  let angle = angleStep * index;
 
-    // Calcola la posizione di ogni cerchio lungo il raggio
+  let x1 = centerX + cos(angle) * size / 10;
+  let y1 = centerY + sin(angle) * size / 10;
+
+  // Gestione colori e saturazione
+  if (isNone) {
+    fill(248, 255, 184, isHover ? 45 : 25); 
+  } else {
+    fill(248, 255, 184, isHover ? 255 : 15); 
+  }
+
+  // --- DIFFERENZA SPESSORE ---
+  // Raggi con dati: spessore base 9.5 (più largo). 
+  // Raggi none: spessore base 0.5 (un filo sottile).
+  let spessoreDati = 9.5;
+  let spessoreNone = 0.5;
+  let maxRadius = (isNone ? spessoreNone : spessoreDati) / 500 * size;
+
+  for (let j = 0; j < rayLength * size / 160; j++) {
+    let radius = map(j, 0, rayLength * 17 / 4, 0, maxRadius);
+    let distance = j * 2 / 4;
     let x = x1 + cos(angle) * distance;
     let y = y1 + sin(angle) * distance;
-    
-    ellipse(x, y, radius * 2, radius * 2); // Disegna il cerchio
+    noStroke();
+    ellipse(x, y, radius * 2, radius * 2);
   }
+
+  // Testi con massima saturazione come richiesto
+  let fontSize = 1.1 / 36 * size;
+  fill(255, 255, 191, 255); 
+  textAlign(CENTER, CENTER);
+  textFont(RegularBaskerville);
+  textSize(fontSize);
   
-  let fontSize = 1/36 *size
-  fill(255, 255, 191, 70)
-  textAlign(CENTER,CENTER);
-  textFont (RegularBaskerville);
-  textSize (fontSize)
-  let maxx =  x1 + cos(angle) * size/2.55;
-  let maxy =  y1 + sin(angle) * size/2.55;
+  let distanziamentoNumeri = size / 2.4; 
+  let maxx = x1 + cos(angle) * distanziamentoNumeri;
+  let maxy = y1 + sin(angle) * distanziamentoNumeri;
 
-  if (rayLengthData !== null && rayLengthData !== "none") {
-    text(rayLengthData + "%", maxx, maxy);
+  if (isNone) {
+    text("none", maxx, maxy);
   } else {
-    text(rayLengthData, maxx, maxy); // Disegna solo il numero senza il simbolo %
+    text(rayLengthData + "%", maxx, maxy);
   }
-
-  //text(rayLengthData+"%", maxx, maxy);
 }
 
-//funzione per i raggi alone (1)
 function drawSecondRay(index, rayLengthData, size) {
   drawTRay(index, rayLengthData, size);
-
-  noStroke();
-  fill(255, 255, 191, 4)
-  //fill(248, 255, 184)
   let rayLength = parseInt(rayLengthData);
-  if(isNaN(rayLength)) {
-    
-    rayLength = 100;
-     
-  let c = color(248, 255, 184 ,0); // RGB (248, 255, 184) con alpha 128
+  let isHover = (index == window.indiceSpicchio);
+  let isNone = (isNaN(rayLength) || rayLengthData === "none");
   
-  fill(c); // Applica il colore con trasparenza
-  
-    
-    
-  } 
-  let numRays = 14; 
-  let angleStep = TWO_PI / numRays; // Passo angolare per distribuire i raggi in modo uniforme
-  
-  let angle = angleStep * index; // Calcola l'angolo per il raggio corrente
+  let alphaVal = isHover ? (isNone ? 25 : 60) : (isNone ? 5 : 4);
+  fill(255, 255, 191, alphaVal); 
 
-  // Posizione iniziale dei cerchi (i raggi partono da una distanza maggiore dal centro)
-  let x1 = centerX + cos(angle) * size/10; // Aggiustiamo la distanza dal centro (partono più distanti)
-  let y1 = centerY + sin(angle) * size/10; // Aggiustiamo la distanza dal centro (partono più distanti)
+  if (isNone) rayLength = 100;
+  let angle = (TWO_PI / 14) * index;
+  let x1 = centerX + cos(angle) * size / 10;
+  let y1 = centerY + sin(angle) * size / 10;
   
-  let minRadius = 2/500*size;  // Raggio minimo per il primo cerchio
-  let maxRadius = 14/500*size;  // Raggio massimo per l'ultimo cerchio
-  
-  
-  // Ciclo per disegnare i cerchi lungo il raggio
-  for (let j = 0; j < rayLength * size/155; j++) {
-    //let radius = map(j, 0, rayLength, minRadius, maxRadius); // Raggio che cresce lungo il raggio
-    let radius = map(j, 0, rayLength * 17 / 4, minRadius, maxRadius);
-    let distance = j * 2 / 4; // La distanza tra i cerchi lungo il raggio
+  // Anche il bagliore segue la sottigliezza del raggio
+  let maxRadSecond = (isNone ? 1.5 : 12.5) / 500 * size;
 
-    // Calcola la posizione di ogni cerchio lungo il raggio
-    let x = x1 + cos(angle) * distance;
-    let y = y1 + sin(angle) * distance;
-    
-    ellipse(x, y, radius * 2, radius * 2); // Disegna il cerchio
+  for (let j = 0; j < rayLength * size / 155; j++) {
+    let radius = map(j, 0, rayLength * 17 / 4, 1/500*size, maxRadSecond);
+    let distance = j * 2 / 4;
+    ellipse(x1 + cos(angle) * distance, y1 + sin(angle) * distance, radius * 2, radius * 2);
   }
 }
 
-//funzione per i raggi alone (2)
 function drawTRay(index, rayLengthData, size) {
-  noStroke();
-  fill(255, 255, 191, 0.6)
-  if(index == indiceSpicchio) {
-    fill(200, 200, 200, 4);
-  }
-  //fill(248, 255, 184)
   let rayLength = parseInt(rayLengthData);
-  if(isNaN(rayLength)) {
-    
-    rayLength = 100;
-     // Crea il colore #F8FFB8 con trasparenza
-  let c = color(248, 255, 184 ,0); 
- 
-  fill(c); // Applica il colore con trasparenza
+  let isHover = (index == window.indiceSpicchio);
+  let isNone = (isNaN(rayLength) || rayLengthData === "none");
   
-    
-    
-  }
-   
-  let numRays = 14; 
-  let angleStep = TWO_PI / numRays; // Passo angolare per distribuire i raggi in modo uniforme
-  
-  let angle = angleStep * index; // Calcola l'angolo per il raggio corrente
+  let alphaVal = isHover ? (isNone ? 15 : 30) : (isNone ? 2 : 2);
+  fill(255, 255, 191, alphaVal); 
 
-  // Posizione iniziale dei cerchi (i raggi partono da una distanza maggiore dal centro)
-  let x1 = centerX + cos(angle) * size/10; // Aggiustiamo la distanza dal centro (partono più distanti)
-  let y1 = centerY + sin(angle) * size/10; // Aggiustiamo la distanza dal centro (partono più distanti)
+  if (isNone) rayLength = 100;
+  let angle = (TWO_PI / 14) * index;
+  let x1 = centerX + cos(angle) * size / 10;
+  let y1 = centerY + sin(angle) * size / 10;
   
-  let minRadius = 3/500*size;  // Raggio minimo per il primo cerchio
-  let maxRadius = 20/500*size;  // Raggio massimo per l'ultimo cerchio
+  let maxRadT = (isNone ? 2.5 : 16.5) / 500 * size;
   
-  
-  // Ciclo per disegnare i cerchi lungo il raggio
-  for (let j = 0; j < rayLength * size/150; j++) {
-    //let radius = map(j, 0, rayLength, minRadius, maxRadius); // Raggio che cresce lungo il raggio
-    let radius = map(j, 0, rayLength * 17 / 4, minRadius, maxRadius);
-    let distance = j * 2 / 4; // La distanza tra i cerchi lungo il raggio
-
-    // Calcola la posizione di ogni cerchio lungo il raggio
-    let x = x1 + cos(angle) * distance;
-    let y = y1 + sin(angle) * distance;
-    
-    ellipse(x, y, radius * 2, radius * 2); // Disegna il cerchio
+  for (let j = 0; j < rayLength * size / 150; j++) {
+    let radius = map(j, 0, rayLength * 17 / 4, 2/500*size, maxRadT);
+    let distance = j * 2 / 4;
+    ellipse(x1 + cos(angle) * distance, y1 + sin(angle) * distance, radius * 2, radius * 2);
   }
 }
 
-function mouseMoved() {
-  let mouseDist = dist(mouseX, mouseY, centerX, centerY);
-  if (mouseDist < size / 2) {  // Controlla se il mouse è dentro il cerchio
-    let numRays = 14;
-    let angleStep = TWO_PI / numRays; // Passo angolare per distribuire i raggi in modo uniforme
-    let angle = atan2(mouseY - centerY, mouseX - centerX); // Calcola l'angolo rispetto al centro
-
-    // Trova il raggio corrispondente all'angolo
-    activeRay = floor((angle + PI) / angleStep); // Calcola quale spicchio è attivo
-    if (activeRay < 0) activeRay = numRays - 1; // Correggi l'angolo negativo
-  } else {
-    activeRay = -1;  // Nessun raggio attivo se il mouse è fuori dal cerchio
-  }
-}
-
-//funzione per i cerchi del 50% e 100%
 function disegnaCerchi(x, y, size, paese){
+  push();
+  angleMode(DEGREES);
   noFill();
-  strokeWeight (2);
-  stroke(214, 214, 156, 90);
+  strokeWeight(1.5);
+  stroke(214, 214, 156, 140);
   drawingContext.setLineDash([0.5, 10.5]);
   ellipse(x, y, size*22/26, size*22/26);
-  stroke(214, 214, 156, 70);
+  stroke(214, 214, 156, 110);
   ellipse(x, y, size*14/26, size*14/26);
-
-  let arco = 360/14
-  
   drawingContext.setLineDash([0, 0]);
-  angleMode(DEGREES)
-  let nuovaSize = 29/26* size
-  stroke("#B1803C75");
+
+  let nuovaSize = 30.5/26 * size; 
+  let arco = 360/14;
+  let onAlpha = "B4"; 
+  let offAlpha = "50"; 
+  strokeWeight(2.5); 
+
+  let alphaEco = (indiceSpicchio >= 11 && indiceSpicchio <= 13) ? onAlpha : offAlpha;
+  stroke(color(COLORS.economic + alphaEco)); 
   arc(x, y, nuovaSize, nuovaSize, arco*10.9, arco*13.2);
-  stroke("#B7626375");
+
+  let alphaSoc = (indiceSpicchio >= 0 && indiceSpicchio <= 3) ? onAlpha : offAlpha;
+  stroke(color(COLORS.social + alphaSoc)); 
   arc(x, y, nuovaSize, nuovaSize, arco*13.9, arco*3.2);
-  stroke("#87538F75");
+
+  let alphaFre = (indiceSpicchio >= 4 && indiceSpicchio <= 6) ? onAlpha : offAlpha;
+  stroke(color(COLORS.freedom + alphaFre)); 
   arc(x, y, nuovaSize, nuovaSize, arco*3.9, arco*6.2);
-  stroke("#6969B775");
+
+  let alphaVio = (indiceSpicchio >= 7 && indiceSpicchio <= 10) ? onAlpha : offAlpha;
+  stroke(color(COLORS.violence + alphaVio)); 
   arc(x, y, nuovaSize, nuovaSize, arco*6.9, arco*10.2);
-
   
+  pop();
 }
 
-
-///////////Testi curvi///////////////// (fino a riga 655)
-function testoCurvoEconomic (x, y, size) {
-  textSize(size * 0.04);
-  textAlign(CENTER, CENTER);
-  angleMode(DEGREES);
+function disegnaScala(x, y, size) {
+  push();
+  let r50 = (size * 14 / 26) / 2;  
+  let r100 = (size * 22 / 26) / 2; 
+  let rMax = (size * 29 / 26) / 2; 
   textFont(inconsolataRegular);
-  let arco = 360/14
-  
-  let angoloIniziale = arco*11.4; // Angolo iniziale (ad esempio -90 gradi)
-  let angoloFinale = arco*12.7;    // Angolo finale (ad esempio 90 gradi)
-
-  let raggio = size * 16 / 26; // raggio della curva
-  let testo = "Economic rights";
-  
-  // Calcolare la lunghezza dell'arco (differenza tra angolo finale e iniziale)
-  let angoloTotale = angoloFinale - angoloIniziale;
-  
-  // Disegnare l'arco come riferimento
-  noFill();
+  textSize(size * 0.04); 
+  textAlign(RIGHT, CENTER);
+  stroke(214, 214, 156, 160);
+  strokeWeight(1.5);
+  drawingContext.setLineDash([2, 4]);
+  let yBase = y + (size * 0.12); 
+  let offset = size * 0.04; 
+  let y50 = yBase - offset;
+  let lineLen50 = size * 0.30; 
+  line(x - r50, y50, x - rMax - lineLen50, y50);
   noStroke();
-  arc(x, y, raggio * 2, raggio * 2, angoloIniziale, angoloFinale); // Disegna solo l'arco
+  fill(214, 214, 156, 240); 
+  text("50%", x - rMax - lineLen50 - 10, y50);
+  stroke(214, 214, 156, 160);
+  drawingContext.setLineDash([2, 4]);
+  let y100 = yBase + offset;
+  let lineLen100 = size * 0.55; 
+  line(x - r100, y100, x - rMax - lineLen100, y100);
+  noStroke();
+  fill(214, 214, 156, 240);
+  text("100%", x - rMax - lineLen100 - 10, y100);
+  pop();
+}
 
+function disegnaTestoCurvo(x, y, r, testo, angInizio, angFine, col, inverti) {
+  push();
+  angleMode(DEGREES);
+  textSize(size * 0.042); 
+  textAlign(CENTER, CENTER);
+  textFont(inconsolataRegular);
+  fill(col);
+  noStroke();
   let numLettere = testo.length;
-  
-  // Calcolare l'angolo per ogni lettera in base all'arco specifico
-  let angoloStep = angoloTotale / (numLettere - 1); // Suddividi l'arco in base al numero di lettere
-  
-  // Ciclo su ogni lettera del testo
+  let angoloTotale = angFine - angInizio;
+  let angoloStep = angoloTotale / (numLettere - 1);
   for (let i = 0; i < numLettere; i++) {
-    let angolo = angoloIniziale + angoloStep * i; // Calcola l'angolo per la lettera i
-
-    // Calcolare la posizione x e y sulla circonferenza
-    let x2 = x + raggio * cos(angolo);
-    let y2 = y + raggio * sin(angolo);
-    
-    // Impostazioni per il colore
-    noStroke();
-    fill("#c4802075"); // Imposta il colore del testo
-    
-    // Ruotare il testo in modo che sia orientato lungo la curva
+    let charIndex = inverti ? (numLettere - 1 - i) : i;
+    let angolo = angInizio + angoloStep * i;
+    let tx = x + r * cos(angolo);
+    let ty = y + r * sin(angolo);
     push();
-    translate(x2, y2);
-    rotate(angolo + 90); // Rotazione per allineare il testo alla curva
-    text(testo.charAt(i), 0, 0); // Disegna la lettera
+    translate(tx, ty);
+    rotate(angolo + (inverti ? 270 : 90));
+    text(testo.charAt(charIndex), 0, 0);
     pop();
   }
-
-
-  
-
-  
-  
+  pop();
 }
 
-function testoCurvoSocial (x, y, size) {
-  textSize(size * 0.04);
-  textAlign(CENTER, CENTER);
-  angleMode(DEGREES);
-  textFont(inconsolataRegular);
-  let arco = 360/14
-  
-  let angoloIniziale = arco*0.85; // Angolo iniziale (ad esempio -90 gradi)
-  let angoloFinale = arco*2.15;    // Angolo finale (ad esempio 90 gradi)
-
-  let raggio = size * 16 / 26; // raggio della curva
-  let testo = "Social rights";
-  
-  // Calcolare la lunghezza dell'arco (differenza tra angolo finale e iniziale)
-  let angoloTotale = angoloFinale - angoloIniziale;
-  
-  // Disegnare l'arco come riferimento
-  noFill();
-  noStroke();
-  arc(x, y, raggio * 2, raggio * 2, angoloIniziale, angoloFinale); // Disegna solo l'arco
-
-  let numLettere = testo.length;
-  
-  // Calcolare l'angolo per ogni lettera in base all'arco specifico
-  let angoloStep = angoloTotale / (numLettere - 1); // Suddividi l'arco in base al numero di lettere
-  
-  // Ciclo su ogni lettera del testo
-  for (let i = 0; i < numLettere; i++) {
-    let angolo = angoloIniziale + angoloStep * i; // Calcola l'angolo per la lettera i
-
-    // Calcolare la posizione x e y sulla circonferenza
-    let x2 = x + raggio * cos(angolo);
-    let y2 = y + raggio * sin(angolo);
-    
-    // Impostazioni per il colore
-    noStroke();
-    fill("#B7626375"); // Imposta il colore del testo
-    
-    // Ruotare il testo in modo che sia orientato lungo la curva
-    push();
-    translate(x2, y2);
-    rotate(angolo + 90); // Rotazione per allineare il testo alla curva
-    text(testo.charAt(i), 0, 0); // Disegna la lettera
-    pop();
+function mouseOverReaction(size) {
+  angleMode(RADIANS);
+  let nuovoValoreIndiceSpicchio = -1;
+  let distanza = dist(mouseX, mouseY, centerX, centerY);
+  if (distanza < size/2) {
+    let angolo = atan2(mouseY - centerY, mouseX - centerX);
+    let angoloGradi = degrees(angolo);
+    if (angoloGradi < 0) angoloGradi += 360;
+    angoloGradi = (angoloGradi + 360/28) % 360;
+    nuovoValoreIndiceSpicchio = floor(map(angoloGradi, 0, 360, 0, 14)) % 14;
+  } 
+  if(nuovoValoreIndiceSpicchio != window.indiceSpicchio) {
+    window.indiceSpicchio = nuovoValoreIndiceSpicchio;
+    cambiamento = true;
   }
-
-
-  
-
-  
-  
 }
-
-function testoCurvoFree (x, y, size) {
-  textSize(size * 0.04);
-  textAlign(CENTER, CENTER);
-  angleMode(DEGREES);
-  textFont(inconsolataRegular);
-  let arco = 360/14
-  
-  let angoloIniziale = arco*4.25; // Angolo iniziale (ad esempio -90 gradi)
-  let angoloFinale = arco*5.85;    // Angolo finale (ad esempio 90 gradi)
-
-  let raggio = size * 16 / 26; // raggio della curva
-  let testo = "Freedom and Justice";
-  
-  // Calcolare la lunghezza dell'arco (differenza tra angolo finale e iniziale)
-  let angoloTotale = angoloFinale - angoloIniziale;
-  
-  // Disegnare l'arco come riferimento
-  noFill();
-  noStroke();
-  arc(x, y, raggio * 2, raggio * 2, angoloIniziale, angoloFinale); // Disegna solo l'arco
-
-  let numLettere = testo.length;
-  
-  // Calcolare l'angolo per ogni lettera in base all'arco specifico
-  let angoloStep = angoloTotale / (numLettere - 1); // Suddividi l'arco in base al numero di lettere
-  
-  // Ciclo su ogni lettera del testo
-  for (let i = 0; i < numLettere; i++) {
-    let angolo = angoloIniziale + angoloStep * i; // Calcola l'angolo per la lettera i
-
-    // Calcolare la posizione x e y sulla circonferenza
-    let x2 = x + raggio * cos(angolo);
-    let y2 = y + raggio * sin(angolo);
-    
-    // Impostazioni per il colore
-    noStroke();
-    fill("#87538F75"); // Imposta il colore del testo
-    
-    // Ruotare il testo in modo che sia orientato lungo la curva
-    push();
-    translate(x2, y2);
-    rotate(angolo + 90); // Rotazione per allineare il testo alla curva
-    text(testo.charAt(i), 0, 0); // Disegna la lettera
-    pop();
-  }
-
-
-  
-
-  
-  
-}
-
-function testoCurvoViolence (x, y, size) {
-  textSize(size * 0.04);
-  textAlign(CENTER, CENTER);
-  angleMode(DEGREES);
-  textFont(inconsolataRegular);
-  let arco = 360/14
-  
-  let angoloIniziale = arco*7.7; // Angolo iniziale (ad esempio -90 gradi)
-  let angoloFinale = arco*9.2;    // Angolo finale (ad esempio 90 gradi)
-
-  let raggio = size * 16 / 26; // raggio della curva
-  let testo = "General Violence";
-  
-  // Calcolare la lunghezza dell'arco (differenza tra angolo finale e iniziale)
-  let angoloTotale = angoloFinale - angoloIniziale;
-  
-  // Disegnare l'arco come riferimento
-  noFill();
-  noStroke();
-  arc(x, y, raggio * 2, raggio * 2, angoloIniziale, angoloFinale); // Disegna solo l'arco
-
-  let numLettere = testo.length;
-  
-  // Calcolare l'angolo per ogni lettera in base all'arco specifico
-  let angoloStep = angoloTotale / (numLettere - 1); // Suddividi l'arco in base al numero di lettere
-  
-  // Ciclo su ogni lettera del testo
-  for (let i = 0; i < numLettere; i++) {
-    let angolo = angoloIniziale + angoloStep * i; // Calcola l'angolo per la lettera i
-
-    // Calcolare la posizione x e y sulla circonferenza
-    let x2 = x + raggio * cos(angolo);
-    let y2 = y + raggio * sin(angolo);
-    
-    // Impostazioni per il colore
-    noStroke();
-    fill("#6969B775"); // Imposta il colore del testo
-    
-    // Ruotare il testo in modo che sia orientato lungo la curva
-    push();
-    translate(x2, y2);
-    rotate(angolo + 90); // Rotazione per allineare il testo alla curva
-    text(testo.charAt(i), 0, 0); // Disegna la lettera
-    pop();
-  }
-
-
-  
-  
-}
-
-
-//funzione per il nome del paese
-function ilGrandeNome (x, totalHeight, size, nome, font){
-  
-  textAlign(LEFT, TOP);
-  textSize (size *0.1)
-  textFont (font);
-  fill(248, 255, 184);
-  // Sostituire i simboli "_" con uno spazio vuoto nella stringa "nome['nome']"
-  let myString = nome["nome"].replace(/_/g, " ");
-  
-  // Disegnare il testo sostituito
-  text(myString, x - 12.8/16 * x, (totalHeight / 2) - (8 / 16 * size));
-  
-  // Stampare il risultato per il debug
-  print(myString);  // Output: "United States of America"
-}
-
-function findCountryData(countryName) {
-    for (let r of data.rows) {
-      let riga = r.obj;
-      if (riga["Country"] === countryName) {
-        console.log("Data found for", countryName);
-        return riga;
-      }
-    }
-    console.log("Data not found for", countryName);  // Aggiungi un log per verificare
-    return null; // Se il paese non viene trovato
-}
-

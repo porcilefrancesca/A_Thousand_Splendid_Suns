@@ -1,173 +1,392 @@
- <!--File HTML che definsice il contenuto da visualizzare all'interno della pagina "Parameters"-->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Parameters</title>
-  <link rel="stylesheet" href="generalstyle.css">
-  <link rel="stylesheet" href="visualisation.css">
-  <link rel="stylesheet" href="swiperparameters.css">
-  <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css"> <!-- collegamento al file CSS per galleria swiper-->
+  <title>Parameters - A Thousand Splendid Suns</title>
+  
+  <link rel="stylesheet" href="../generalstyle.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@400;700;900&display=swap');
+
+    /* 1. LAYOUT & TRANSITIONS */
+    body {
+      background-color: #06011E;
+    }
+
+    #main-content {
+      transition: opacity 0.4s ease;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* INTRO BOX */
+    .intro-box {
+      width: 100%;
+      max-width: 1400px; 
+      margin: 0 auto;    
+      padding: 130px clamp(40px, 8vw, 120px) 40px clamp(40px, 8vw, 120px); 
+      box-sizing: border-box;
+      flex-shrink: 0;
+    }
+
+    .intro-box p {
+      font-size: 1rem;
+      line-height: 1.6em;
+      max-width: 600px;
+      margin: 0;        
+      color: #f8ffb890;
+    }
+
+    .center-box {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      flex-grow: 1;
+      margin-top: 40px; 
+      background: transparent !important;
+    }
+
+    .swiper-limiter {
+      width: 100%; 
+      position: relative;
+      padding: 40px 0; 
+      -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+      mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+    }
+
+    .swiper {
+      width: 100%;
+      overflow: visible !important; 
+      padding: 40px 0 !important;
+    }
+
+    .swiper-slide {
+      width: 350px !important; 
+      height: 350px !important; 
+      border-radius: 50%;
+      background-color: var(--primary-color);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between; 
+      align-items: center;     
+      text-align: center;
+      padding: 65px 50px 55px 50px; 
+      box-sizing: border-box;
+      transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+      opacity: 0.15; 
+      filter: saturate(0) blur(2px);
+      transform: scale(0.8);
+    }
+
+    .swiper-slide-active {
+      opacity: 1;
+      filter: saturate(1) blur(0px);
+      transform: scale(1);
+      box-shadow: 
+        0 0 30px var(--glow-opacity), 
+        0 0 60px var(--glow-opacity), 
+        0 0 100px var(--glow-opacity);
+    }
+
+    .text-group {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      justify-content: center;
+      flex-grow: 1; 
+    }
+
+    .swiper-slide .highlight {
+      font-weight: 900;
+      color: var(--bg-color);
+      font-size: 1rem;
+      margin: 0; 
+      line-height: 1.2;
+      text-transform: uppercase;
+      letter-spacing: 0.01em;
+      max-width: 260px;
+    }
+
+    .swiper-slide p {
+      color: var(--bg-color);
+      font-size: 0.82rem;
+      margin: 0; 
+      line-height: 1.4;
+      max-width: 260px; 
+    }
+
+    .category {
+      background-color: color-mix(in srgb, var(--bg-color), transparent 100%);
+      padding: 6px 16px;
+      border-radius: 4px;
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      font-weight: 700;
+      display: inline-block;
+      white-space: nowrap;
+      flex-shrink: 0; 
+      margin-top: 8px;
+      color: #6f66a0;
+    }
+
+    .navigation-wrapper {
+      position: relative;
+      width: 130px; 
+      height: 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 10;
+      margin: -30px auto 120px auto; 
+      flex-shrink: 0;
+    }
+
+    .swiper-button-next, .swiper-button-prev {
+      position: relative !important;
+      color: var(--primary-color) !important;
+      background: rgba(248, 255, 184, 0.05);
+      width: 32px !important; 
+      height: 32px !important; 
+      border-radius: 50%;
+    }
+
+    .swiper-button-next::after, .swiper-button-prev::after {
+      font-size: 0.8rem !important; 
+    }
+
+    .footer {
+      transition: opacity 0.4s ease;
+    }
+
+    @media screen and (max-width: 768px) {
+      .intro-box { padding-top: 100px; }
+      .swiper-slide { width: 320px !important; height: 320px !important; padding: 50px 40px 45px 40px; }
+      .navigation-wrapper { margin-top: -10px; }
+    }
+  </style>
 </head>
 <body class="project-page">
-  <!-- Freccia per tornare indietro -->
-  <a href="javascript:void(0);" class="back-arrow" onclick="goBack()">←</a>
 
-  <!-- Header con logo e menu di navigazione -->
   <header class="header">
-    <img src="../logo/logoheader.png" alt="Logo" class="logo">
-    <!-- Menu di navigazione -->
-    <nav class="menu">
-      <a href="visualisation.html">VISUALISATION</a>
-      <a href="about.html">ABOUT</a>
+    <div class="logo-wrapper" id="logo-to-dim">
+      <img src="../logo/logoheader.png" alt="Logo" class="logo">
+    </div>
+    <button class="hamburger" id="hamburger-btn">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="hamburger-menu" id="hamburger-menu">
+      <a href="visualisation.html">Visualisation</a>
+      <a href="dataset.html">Dataset</a>
+      <a href="about.html">About</a>
+      <a href="credits.html">Credits</a>
     </nav>
   </header>
-  
-  <!-- Box per il testo introduttivo -->
-  <div class="intro-box">
-    <p>
-      These parameters reflect various aspects of gender equality and the status of women in society, providing a multi-dimensional view of women’s socioeconomic, cultural and political status globally, helping identify areas where gender disparities persist and where progress has been made.
-    </p>
-  </div>
 
-  <!-- Galleria Swiper -->
-  <div class="center-box">
-    <div class="swiper-container">
-      <div class="swiper-wrapper">
-        
-        <!-- Sezione Economic Rights -->
-        <div class="swiper-slide" id="slide-1">
-          <span class="highlight">Bank account ownership</span>
-          <p>Tracks women's access to formal financial systems, essential for autonomy and participation in the economy.</p>
-          <div class="category economic-rights">Economic Rights</div>
-        </div>
-        <div class="swiper-slide" id="slide-2">
-          <span class="highlight">House ownership</span>
-          <p>Measures the percentage of women who own a house, indicating women's access to assets and financial independence.</p>
-          <div class="category economic-rights">Economic Rights</div>
-        </div>
-        <div class="swiper-slide" id="slide-3">
-          <span class="highlight">Land ownership</span>
-          <p>Indicates the proportion of women owning land, reflecting economic empowerment and inheritance rights.</p>
-          <div class="category economic-rights">Economic Rights</div>
-        </div>
-   
-        <!-- Sezione Social Rights -->
-        <div class="swiper-slide" id="slide-4">
-          <span class="highlight">Perception that a woman earning more or the same as her husband doesn’t cause problems</span>
-          <p>Gauges societal acceptance of women's economic empowerment within households.</p>
-          <div class="category social-rights">Social Rights</div>
-        </div>
-        <div class="swiper-slide" id="slide-5">
-          <span class="highlight">Perception that men shouldn't have more right to a job than women</span>
-          <p>Highlights societal attitudes toward gender equality in employment. It reflects the belief that women should have equal opportunities in the workforce, challenging traditional norms that prioritize men’s employment.</p>
-          <div class="category social-rights">Social Rights</div>
-        </div>
-        <div class="swiper-slide" id="slide-6">
-          <span class="highlight">Perception that children don’t necessarily suffer more if a mother works for pay</span>
-          <p>Reflects attitudes towards working mothers, challenging stereotypes about traditional gender roles.</p>
-          <div class="category social-rights">Social Rights</div>
-        </div>
-        <div class="swiper-slide" id="slide-7">
-          <span class="highlight">Perception that men don't necessarily make better business executives than women</span>
-          <p>Captures gender biases in professional leadership and workplace equality.</p>
-          <div class="category social-rights">Social Rights</div>
-        </div>
+  <div id="main-content">
+    <div class="intro-box">
+      <p>
+        These parameters reflect various aspects of gender equality and the status of women in society, providing a multi-dimensional view of women’s socioeconomic, cultural and political status globally, helping identify areas where gender disparities persist and where progress has been made.
+      </p>
+    </div>
 
-        <!-- Sezione Freedom & Justice -->
-       <div class="swiper-slide" id="slide-8">
-        <span class="highlight">Feeling of safety at night</span>
-        <p>Indicates women’s perception of public safety, a key factor for mobility and freedom.</p>
-        <div class="category freedom-justice">Freedom & Justice</div>
+    <div class="center-box">
+      <div class="swiper-limiter">
+        <div class="swiper mySwiper">
+          <div class="swiper-wrapper">
+            
+            <div class="swiper-slide">
+              <div class="text-group">
+                <span class="highlight">Bank account ownership</span>
+                <p>Tracks women's access to formal financial systems, essential for autonomy and participation in the economy.</p>
+              </div>
+              <div class="category">Economic Rights</div>
+            </div>
+
+            <div class="swiper-slide">
+              <div class="text-group">
+                <span class="highlight">House ownership</span>
+                <p>Measures the percentage of women who own a house, indicating women's access to assets and financial independence.</p>
+              </div>
+              <div class="category">Economic Rights</div>
+            </div>
+
+            <div class="swiper-slide">
+              <div class="text-group">
+                <span class="highlight">Land ownership</span>
+                <p>Indicates the proportion of women owning land, reflecting economic empowerment and inheritance rights.</p>
+              </div>
+              <div class="category">Economic Rights</div>
+            </div>
+
+            <div class="swiper-slide">
+              <div class="text-group">
+                <span class="highlight">Perception that a woman earning more or same as husband doesn’t cause problems</span>
+                <p>Gauges societal acceptance of women's economic empowerment within households.</p>
+              </div>
+              <div class="category">Social Rights</div>
+            </div>
+
+            <div class="swiper-slide">
+              <div class="text-group">
+                <span class="highlight">Perception that men shouldn't have more right to get a job than women</span>
+                <p>Highlights societal attitudes toward gender equality in employment.</p>
+              </div>
+              <div class="category">Social Rights</div>
+            </div>
+
+            <div class="swiper-slide">
+              <div class="text-group">
+                <span class="highlight">Perception that children don’t suffer more if a mother works for pay</span>
+                <p>Reflects attitudes towards working mothers, challenging stereotypes about traditional gender roles.</p>
+              </div>
+              <div class="category">Social Rights</div>
+            </div>
+
+            <div class="swiper-slide">
+              <div class="text-group">
+                <span class="highlight">Perception that men don't make better business executives than women</span>
+                <p>Captures gender biases in professional leadership and workplace equality.</p>
+              </div>
+              <div class="category">Social Rights</div>
+            </div>
+
+            <div class="swiper-slide">
+              <div class="text-group">
+                <span class="highlight">Feeling of safety at night</span>
+                <p>Indicates women’s perception of public safety, a key factor for mobility and freedom.</p>
+              </div>
+              <div class="category">Freedom & Justice</div>
+            </div>
+
+            <div class="swiper-slide">
+              <div class="text-group">
+                <span class="highlight">Confidence in Judicial System and courts</span>
+                <p>Indicates trust in legal institutions to protect women's rights and ensure justice.</p>
+              </div>
+              <div class="category">Freedom & Justice</div>
+            </div>
+
+            <div class="swiper-slide">
+              <div class="text-group">
+                <span class="highlight">Perception that men aren’t better political leaders than women</span>
+                <p>Measures beliefs about women’s leadership capabilities, crucial for political representation.</p>
+              </div>
+              <div class="category">Freedom & Justice</div>
+            </div>
+
+            <div class="swiper-slide">
+              <div class="text-group">
+                <span class="highlight">Women who didn’t undergo child marriage</span>
+                <p>Shows the percentage of women married after the legal or socially accepted age.</p>
+              </div>
+              <div class="category">General Violence</div>
+            </div>
+
+            <div class="swiper-slide">
+              <div class="text-group">
+                <span class="highlight">Women who didn’t undergo FGM</span>
+                <p>Measures the prevalence of Female Genital Mutilation (FGM) avoidance.</p>
+              </div>
+              <div class="category">General Violence</div>
+            </div>
+
+            <div class="swiper-slide">
+              <div class="text-group">
+                <span class="highlight">Perception that FGM should stop</span>
+                <p>Reflects societal awareness and rejection of harmful traditional practices.</p>
+              </div>
+              <div class="category">General Violence</div>
+            </div>
+
+            <div class="swiper-slide">
+              <div class="text-group">
+                <span class="highlight">Perception that a husband is not justified in beating his wife</span>
+                <p>Highlights attitudes toward domestic violence.</p>
+              </div>
+              <div class="category">General Violence</div>
+            </div>
+            
+          </div>
+        </div>
       </div>
-      <div class="swiper-slide" id="slide-9">
-        <span class="highlight">Confidence in the Judicial System and courts</span>
-        <p>Indicates trust in legal institutions to protect women's rights and ensure justice.</p>
-        <div class="category freedom-justice">Freedom & Justice</div>
-      </div>
-      <div class="swiper-slide" id="slide-10">
-        <span class="highlight">Perception that men aren’t necessarily better political leaders than women</span>
-        <p>Measures beliefs about women’s leadership capabilities, crucial for political representation.</p>
-        <div class="category freedom-justice">Freedom & Justice</div>
-      </div>
- 
-    <!-- Sezione General Violence -->
-        <div class="swiper-slide" id="slide-11">
-          <span class="highlight">Women who didn’t undergo child marriage</span>
-          <p>Shows the percentage of women married after the legal or socially accepted age, highlighting progress in protecting girls’ rights.</p>
-          <div class="category general-violence">General Violence</div>
-        </div>
-        <div class="swiper-slide" id="slide-12">
-          <span class="highlight">Women who didn’t undergo FGM</span>
-          <p>Measures the prevalence of Female Genital Mutilation (FGM) avoidance, an important marker of bodily autonomy and health rights.</p>
-          <div class="category general-violence">General Violence</div>
-        </div>
-        <div class="swiper-slide" id="slide-13">
-          <span class="highlight">Perception that FGM should stop</span>
-          <p>Reflects societal awareness and rejection of harmful traditional practices in Female Genital Mutilation (FGM).</p>
-          <div class="category general-violence">General Violence</div>
-        </div>
-        <div class="swiper-slide" id="slide-14">
-          <span class="highlight">Perception that a husband is not justified in hitting or beating his wife under any circumstances</span>
-          <p>Highlights attitudes toward domestic violence and <br> gender-based abuse.</p>
-          <div class="category general-violence">General Violence</div>
-        </div>
+
+      <div class="navigation-wrapper">
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
       </div>
     </div>
-      <!-- Contenitore per la paginazione (numero della slide) -->
-      <div class="swiper-pagination"></div>
-      <!-- Bottoni di navigazione -->
-      <div class="swiper-button-prev-small"><</div>
-      <div class="swiper-button-next-small">></div>
-    </div>
+
+    <footer class="footer">
+      <em>A Thousand Splendid Suns</em> // Laboratorio di Computer Grafica per l'Information Design // Scuola del Design // Politecnico di Milano // a.a. 2024/2025
+    </footer>
   </div>
 
-  <!-- Footer -->
-  <footer class="footer">
-    <p>Laboratorio di Computer Grafica per l'Information Design - Politecnico di Milano</p>
-  </footer>
-
-  <!-- Swiper JS -->
-  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   <script>
-    // Legge il parametro "slide" dalla query string
-    const urlParams = new URLSearchParams(window.location.search);
-    const slideParam = urlParams.get('slide'); // Esempio: ?slide=7
-    const initialSlide = slideParam ? parseInt(slideParam) - 1 : 0; // Calcola l'indice della slide
-
-    const swiper = new Swiper('.swiper-container', {
-      loop: true,
-      effect: 'fade',
-      fadeEffect: {
-        crossFade: true,
-      },
-      pagination: {
-        el: '.swiper-pagination',
-        type: 'fraction',
-        renderFraction: (currentClass) => {
-          return '<span class="' + currentClass + '"></span>';
-        },
-      },
+    // 1. INIZIALIZZAZIONE SWIPER (MANTENUTA)
+    const swiper = new Swiper('.mySwiper', {
+      initialSlide: (new URLSearchParams(window.location.search).get('slide') || 1) - 1,
+      slidesPerView: 'auto',
+      centeredSlides: true,
+      spaceBetween: 60,
+      grabCursor: true,
+      speed: 800,
       navigation: {
-        nextEl: '.swiper-button-next-small',
-        prevEl: '.swiper-button-prev-small',
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
       },
-      slidesPerView: 1,
-      spaceBetween: 0,
-      touchAngle: 45,
-      speed: 700,
-      initialSlide: initialSlide, // Imposta la slide iniziale in base al parametro
+      slideToClickedSlide: true,
+      watchSlidesProgress: true,
     });
 
-    // Funzione per tornare indietro
-    function goBack() {
-      history.back();
-    }
+    // 2. LOGICA MENU HAMBURGER & OSCURAMENTO (UNIFICATA)
+    document.addEventListener("DOMContentLoaded", function() {
+        const btn = document.getElementById("hamburger-btn");
+        const menu = document.getElementById("hamburger-menu");
+        const logo = document.getElementById("logo-to-dim");
+        const main = document.getElementById("main-content");
+        const footer = document.querySelector(".footer");
+
+        let backdrop = document.getElementById("menu-backdrop");
+        if (!backdrop) {
+            backdrop = document.createElement("div");
+            backdrop.id = "menu-backdrop";
+            document.body.appendChild(backdrop);
+        }
+
+        function toggleMenu(forceClose = false) {
+            const isOpening = forceClose ? false : !menu.classList.contains("active");
+            if (isOpening) {
+                menu.classList.add("active");
+                backdrop.classList.add("active");
+                if (logo) logo.classList.add("content-dimmed");
+                if (main) main.classList.add("content-dimmed");
+                if (footer) footer.classList.add("content-dimmed");
+            } else {
+                menu.classList.remove("active");
+                backdrop.classList.remove("active");
+                if (logo) logo.classList.remove("content-dimmed");
+                if (main) main.classList.remove("content-dimmed");
+                if (footer) footer.classList.remove("content-dimmed");
+            }
+        }
+
+        btn.onclick = (e) => { e.stopPropagation(); toggleMenu(); };
+        backdrop.onclick = () => toggleMenu(true);
+        document.onclick = (e) => {
+            if (menu.classList.contains("active") && !menu.contains(e.target) && !btn.contains(e.target)) {
+                toggleMenu(true);
+            }
+        };
+        document.onkeydown = (e) => { if (e.key === "Escape") toggleMenu(true); };
+    });
   </script>
 </body>
 </html>
-
-
-

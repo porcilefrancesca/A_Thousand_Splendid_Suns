@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Credits - A Thousand Splendid Suns</title>
+  
+  <link rel="stylesheet" href="../generalstyle.css">
+  
+  <style>
+    /* 1. IMPORTAZIONE FONT */
+    @import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@400;700&display=swap');
+
+    @font-face {
+      font-family: 'LibreBaskerville Italic';
+      src: url('../fonts/LibreBaskervilleItalic.ttf') format('truetype');
+    }
+
+    /* 2. LAYOUT GENERALE */
+    html, body {
+      height: 100%;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+      font-family: 'Inconsolata', monospace;
+      background-color: #06011E; 
+    }
+
+    .text-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center; 
+      justify-content: center;
+      flex-grow: 1;
+      width: 100%;
+      padding: 60px 20px; 
+      box-sizing: border-box;
+      /* Transizione per l'oscuramento */
+      transition: opacity 0.4s ease;
+    }
+
+    .text {
+      width: 100%;
+      max-width: 40em; 
+      color: #f8ffb890;
+      font-size: 1rem; 
+      line-height: 1.6em;
+      letter-spacing: 0.02em; 
+    }
+
+    /* 3. TITOLI */
+    .title {
+      font-family: 'Inconsolata', monospace;
+      font-size: 1.8rem; 
+      margin-bottom: 25px; 
+      color: #F8FFB8; 
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* 4. CORPO DEL TESTO E GESTIONE RIGHE */
+    .text p {
+      margin-bottom: 1.5em; 
+    }
+
+    .desktop-break {
+      display: block;
+    }
+
+    strong {
+      color: #F8FFB8;
+      font-weight: 700;
+    }
+
+    .footer {
+      flex-shrink: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    /* 5. MOBILE */
+    @media screen and (max-width: 768px) {
+      .desktop-break {
+        display: inline;
+      }
+      .text { 
+        width: 95%; 
+        font-size: 0.95rem;
+      }
+      .text-container { 
+        padding: 40px 20px; 
+        justify-content: center; 
+      }
+      .title {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body class="project-page">
+
+  <header class="header">
+    <div class="logo-wrapper" id="logo-to-dim">
+      <img src="../logo/logoheader.png" alt="Logo" class="logo">
+    </div>
+
+    <button class="hamburger" id="hamburger-btn" aria-label="Menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <nav class="hamburger-menu" id="hamburger-menu">
+      <a href="visualisation.html">Visualisation</a>
+      <a href="dataset.html">Dataset</a>
+      <a href="parameters.html">Parameters</a>
+      <a href="about.html">About</a>
+    </nav>
+  </header>
+  
+  <main class="text-container" id="main-content">
+    <div class="text">
+      <div class="section">
+        <h2 class="title">Behind the project</h2>
+        
+        <p>We are six students from Politecnico di Milano, united by our passion for creativity, technology and innovation.
+           As design students, we developed this project during <span class="desktop-break">the Computer Graphics for Information Design course.</span> Together, we have transformed complex data into visually meaningful and engaging&nbsp;narratives.</p>
+        
+        <p>Each of us brings unique skills to the table:</p>
+        
+        <p><strong>Francesca and Syria</strong> took care of the visual design and developed <span class="desktop-break"></span> the HTML, CSS and JavaScript code for the entire website.</span></p>
+        
+        <p><strong>Arianna and Marta</strong> managed dataset processing, content research and concept&nbsp;development.</p>
+        
+        <p><strong>Giacinta and Chiara</strong> were responsible for creating the entire p5.js code, <span class="desktop-break">from the overall visualisation to the design of the individual suns.</span></p>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <em>A Thousand Splendid Suns</em> // Laboratorio di Computer Grafica per l'Information Design // Scuola del Design // Politecnico di Milano // a.a. 2024/2025
+  </footer>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const btn = document.getElementById("hamburger-btn");
+        const menu = document.getElementById("hamburger-menu");
+        const logo = document.getElementById("logo-to-dim");
+        const main = document.getElementById("main-content");
+        const footer = document.querySelector(".footer");
+
+        // Crea backdrop
+        let backdrop = document.getElementById("menu-backdrop");
+        if (!backdrop) {
+            backdrop = document.createElement("div");
+            backdrop.id = "menu-backdrop";
+            document.body.appendChild(backdrop);
+        }
+
+        function toggleMenu(forceClose = false) {
+            const isOpening = forceClose ? false : !menu.classList.contains("active");
+
+            if (isOpening) {
+                menu.classList.add("active");
+                backdrop.classList.add("active");
+                if (logo) logo.classList.add("content-dimmed");
+                if (main) main.classList.add("content-dimmed");
+                if (footer) footer.classList.add("content-dimmed");
+            } else {
+                menu.classList.remove("active");
+                backdrop.classList.remove("active");
+                if (logo) logo.classList.remove("content-dimmed");
+                if (main) main.classList.remove("content-dimmed");
+                if (footer) footer.classList.remove("content-dimmed");
+            }
+        }
+
+        btn.onclick = (e) => { e.stopPropagation(); toggleMenu(); };
+        backdrop.onclick = () => toggleMenu(true);
+        document.onclick = (e) => {
+            if (menu.classList.contains("active") && !menu.contains(e.target) && !btn.contains(e.target)) {
+                toggleMenu(true);
+            }
+        };
+        document.onkeydown = (e) => { if (e.key === "Escape") toggleMenu(true); };
+    });
+  </script>
+</body>
+</html>

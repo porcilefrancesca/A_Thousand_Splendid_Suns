@@ -1,46 +1,39 @@
-<!--File HTML che definisce il contenuto da visualizzare dell'index-->
-
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A Thousand Splendid Suns</title>
-    <link rel="stylesheet" href="index.css">
-  </head>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A Thousand Splendid Suns</title>
+  <link rel="stylesheet" href="index.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@400;700;900&display=swap" rel="stylesheet">
+</head>
+<body class="home">
 
-  <body class="home">
-    <div class="overlay"></div>
+  <div class="background-container"></div>
+  <div class="body-overlay"></div>
+
+  <div class="main-content">
     <div class="home-container">
-      <img src="logo/logoindex.png" alt="Logo" class="logo"> 
-      <div class="subtitle">Exploring women's condition through data storytelling</div>
-      <button class="btn" onclick="redirectToVisualisation()">Go to Visualisation</button> <!--bottone per aprire la pagina "visualisation"-->
+      <img src="logo/logoindex.png" alt="Logo" class="logo">
+      
+      <div class="subtitle-container">
+        <div class="subtitle">Exploring women's condition through data storytelling</div>
+      </div>
+      
+      <div class="btn-wrapper">
+        <button class="btn" onclick="redirectToVisualisation()"><span>EXPLORE</span></button>
+      </div>
     </div>
-  
+  </div>
 
-    <script>
-      //script per animazione effetto zoom una volta cliccato il bottone
-      function redirectToVisualisation() {
-        document.body.classList.add("zoom-animation");
-        document.querySelector('.home-container').classList.add("hide-elements");
+  <script>
+    function redirectToVisualisation() {
+      document.body.classList.add('transitioning');
+      setTimeout(() => {
+        window.location.href = 'visualisation/visualisation.html';
+      }, 2000);
+    }
+  </script>
 
-        setTimeout(function() {
-          window.location.href = 'visualisation/visualisation.html';
-        }, 1000);
-      }
-    </script>
-  </body>
+</body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-

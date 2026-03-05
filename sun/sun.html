@@ -1,25 +1,142 @@
-<!--File HTML che definisce il contenuto da visualizzare all'interno della pagina "Sun"-->
-
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
+<head>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Sun</title>
-
-    <link rel="stylesheet" type="text/css" href="sun.css">
+    <title>Sun - A Thousand Splendid Suns</title>
 
     <script src="libraries/p5.min.js"></script>
     <script src="libraries/p5.sound.min.js"></script>
-  </head>
 
-  <body>
-    <!-- Freccia per tornare alla visualizzazione generale -->
-    <a href="../visualisation/visualisation.html" class="back-arrow">&#8592;</a>
+    <link rel="stylesheet" href="../generalstyle.css">
 
+    <style>
+        /* Reset fondamentale per rimuovere le scrollbar */
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden; /* Blocca ogni tipo di scroll */
+        }
+
+        .project-page {
+            display: flex;
+            flex-direction: column;
+            height: 100vh; /* Forza l'altezza all'altezza del display */
+        }
+
+        #sketch-holder {
+            flex-grow: 1;
+            width: 100%;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Back link perfettamente allineato */
+.back-link {
+    margin-left: auto;
+    margin-right: 24px;
     
-    <script src="sketchsun.js"></script>
-  </body>
-</html>
+    /* 1. AGGIUNGI QUESTA RIGA: aumenta il numero per spingere in basso */
+    margin-top: 14px; 
 
+    text-decoration: none;
+    color: var(--text-opacity); 
+    font-family: 'Inconsolata', monospace;
+    font-size: clamp(0.7rem, 0.8vw + 0.4rem, 0.85rem);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    white-space: nowrap;
+    transition: all 0.3s ease;
+    
+    display: flex;
+
+    /* 2. MODIFICA QUESTA RIGA: da 'center' a 'flex-start' */
+    align-items: flex-start; 
+}
+
+        .back-link:hover {
+            color: var(--primary-color);
+            text-shadow: 0 0 10px var(--primary-color),
+                         0 0 20px var(--glow-opacity);
+        }
+
+        /* Evitiamo che header e footer creino scroll accidentali */
+        .header, .footer {
+            flex-shrink: 0;
+        }
+    </style>
+</head>
+
+<body class="project-page">
+
+<div id="menu-backdrop"></div>
+
+<header class="header">
+    <div class="logo-wrapper" id="logo-to-dim">
+        <img src="../logo/logoheader.png" alt="Logo" class="logo">
+    </div>
+    
+    <a href="../visualisation/visualisation.html" class="back-link">
+        Back to Global View
+    </a>
+
+    <button class="hamburger" id="hamburger-btn" aria-label="Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+    
+    <nav class="hamburger-menu" id="hamburger-menu">
+        <a href="../visualisation/visualisation.html">Visualisation</a>
+        <a href="../visualisation/dataset.html">Dataset</a>
+        <a href="../visualisation/parameters.html">Parameters</a>
+        <a href="../visualisation/about.html">About</a>
+        <a href="../visualisation/credits.html">Credits</a>
+    </nav>
+</header>
+
+<main id="sketch-holder">
+    </main>
+
+<footer class="footer">
+    <em>A Thousand Splendid Suns</em> // Laboratorio di Computer Grafica per l'Information Design // 
+    Scuola del Design // Politecnico di Milano // a.a. 2024/2025
+</footer>
+
+<script src="sketchsun.js"></script>
+
+<script>
+    const hamburgerBtn = document.getElementById("hamburger-btn");
+    const hamburgerMenu = document.getElementById("hamburger-menu");
+    const backdrop = document.getElementById("menu-backdrop");
+    const logoToDim = document.getElementById("logo-to-dim");
+
+    hamburgerBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        const isActive = hamburgerMenu.classList.toggle("active");
+        backdrop.classList.toggle("active", isActive);
+        logoToDim.style.opacity = isActive ? "0.3" : "1";
+    });
+
+    document.addEventListener("click", (e) => {
+        if (!hamburgerMenu.contains(e.target) && !hamburgerBtn.contains(e.target)) {
+            hamburgerMenu.classList.remove("active");
+            backdrop.classList.remove("active");
+            logoToDim.style.opacity = "1";
+        }
+    });
+
+    // Opzionale: Prevenire il "bounce" dello scroll su dispositivi mobile
+    document.addEventListener('touchmove', function (e) {
+        if (e.target.tagName !== 'A' && e.target.tagName !== 'BUTTON') {
+            e.preventDefault();
+        }
+    }, { passive: false });
+</script>
+
+</body>
+</html>

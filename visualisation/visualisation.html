@@ -1,35 +1,170 @@
- <!--File HTML che definisce il contenuto da visualizzare nella pagina "visualisation"-->
-
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Visualisation</title>
-    <link rel="stylesheet" type="text/css" href="generalstyle.css"> <!--foglio di stile per header e footer-->
-    <link rel="stylesheet" type="text/css" href="visualisation.css"> <!--foglio di stile per il contenuto della visualizzazione-->
+    <title>Visualisation - A Thousand Splendid Suns</title>
+    <link rel="stylesheet" href="../generalstyle.css">
     <script src="libraries/p5.min.js"></script>
     <script src="libraries/p5.sound.min.js"></script>
-  </head>
-  <body class="project-page">
-    <!-- Header con logo-->
+
+    <style>
+        html, body {
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden; 
+            background-color: #06011E;
+        }
+        #sketch-container {
+            flex-grow: 1;
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            overflow: hidden;
+            /* La transizione qui è fondamentale per l'effetto fluido */
+            transition: opacity 0.4s ease; 
+        }
+        .info-overlay {
+            position: absolute;
+            top: 1%; /* Posizione proporzionale dall'alto */
+            right: 2%; /* Posizione proporzionale da destra */
+            z-index: 10;
+
+            /* LARGHEZZA TOTALMENTE SCALABILE */
+            /* Il box sarà sempre largo il 22% della larghezza dello schermo */
+            width: 22vw; 
+            /* Impediamo solo che diventi assurdamente grande su monitor giganti */
+            max-width: 220px; 
+            
+            background-color: rgba(248, 255, 184, 0.05); 
+            border: 1px solid rgba(248, 255, 184, 0.3);
+            
+            /* PADDING SCALABILE */
+            padding: 1.2vw; 
+            border-radius: 1vw; /* Anche gli angoli si arrotondano proporzionalmente */
+            box-sizing: border-box;
+
+            /* TESTO TOTALMENTE SCALABILE */
+            color: #f8ffb8 !important;
+            font-family: 'Inconsolata', monospace !important;
+            font-weight: 400 !important;
+            
+            /* Il font scala linearmente con lo schermo */
+            /* 1.2vw significa che la grandezza è l'1.2% della larghezza schermo */
+            font-size: 0.9vw !important; 
+            line-height: 1.5em !important;
+            
+            text-align: left !important;
+            -webkit-font-smoothing: antialiased !important;
+            -moz-osx-font-smoothing: grayscale !important;
+        }
+
+        /* Correzione per schermi piccolissimi (smartphone verticali) */
+        @media screen and (max-width: 480px) {
+            .info-overlay {
+                width: 35vw; /* Lo allarghiamo un po' rispetto allo schermo per leggibilità */
+                font-size: 2.5vw !important; /* Font leggermente più grande solo qui per non renderlo invisibile */
+                padding: 2vw;
+            }
+        }
+    </style>
+</head>
+<body class="project-page">
+
     <header class="header">
-      <img src="../logo/logoheader.png" alt="Logo" class="logo">
-    <!-- Menù di navigazione -->
-    <nav class="menu">
-      <a href="about.html">ABOUT</a>
-      <a href="parameters.html">PARAMETERS</a>
-    </nav>
-  </header>
-    <!-- Contenitore per il canvas -->
-    <main id="sketch-container"></main>
-    <!-- Footer -->
-    <footer class="footer">
-      <p>Laboratorio di Computer Grafica per l'Information Design - Politecnico di Milano</p>
+        <div class="logo-wrapper" id="logo-to-dim">
+            <img src="../logo/logoheader.png" alt="Logo" class="logo">
+        </div>
+
+        <button class="hamburger" id="hamburger-btn" aria-label="Menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <nav class="hamburger-menu" id="hamburger-menu">
+            <a href="dataset.html">Dataset</a>
+            <a href="parameters.html">Parameters</a>
+            <a href="about.html">About</a>
+            <a href="credits.html">Credits</a>
+        </nav>
+    </header>
+
+    <main id="sketch-container">
+        <div class="info-overlay">
+            A constellation shedding light on the condition of women across the world: the brighter the sun, the better the condition.
+        </div>
+    </main>
+
+   <footer class="footer">
+      <em>A Thousand Splendid Suns</em> // Laboratorio di Computer Grafica per l'Information Design // Scuola del Design // Politecnico di Milano // a.a. 2024/2025
     </footer>
-    <!-- Sketch di p5.js con visualizzazione generale -->
+
     <script src="sketch.js"></script>
-  </body>
+
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const btn = document.getElementById("hamburger-btn");
+        const menu = document.getElementById("hamburger-menu");
+        const logo = document.getElementById("logo-to-dim");
+        const main = document.getElementById("sketch-container");
+        const footer = document.querySelector(".footer");
+
+        // Crea il backdrop se non esiste
+        let backdrop = document.getElementById("menu-backdrop");
+        if (!backdrop) {
+            backdrop = document.createElement("div");
+            backdrop.id = "menu-backdrop";
+            document.body.appendChild(backdrop);
+        }
+
+        // FUNZIONE UNICA DI TOGGLE (APRE E CHIUDE)
+        function toggleMenu(forceClose = false) {
+            // Se forceClose è true, chiudiamo e basta. Altrimenti invertiamo lo stato attuale.
+            const isOpening = forceClose ? false : !menu.classList.contains("active");
+
+            if (isOpening) {
+                // APERTURA: Accendi menu e spegni il resto
+                menu.classList.add("active");
+                backdrop.classList.add("active");
+                if (logo) logo.classList.add("content-dimmed");
+                if (main) main.classList.add("content-dimmed");
+                if (footer) footer.classList.add("content-dimmed");
+            } else {
+                // CHIUSURA: Spegni menu e riaccendi il resto
+                menu.classList.remove("active");
+                backdrop.classList.remove("active");
+                if (logo) logo.classList.remove("content-dimmed");
+                if (main) main.classList.remove("content-dimmed");
+                if (footer) footer.classList.remove("content-dimmed");
+            }
+        }
+
+        // Click sul bottone hamburger
+        btn.onclick = (e) => {
+            e.stopPropagation();
+            toggleMenu();
+        };
+
+        // Click sul velo scuro per chiudere
+        backdrop.onclick = () => toggleMenu(true);
+
+        // Click ovunque fuori per chiudere
+        document.onclick = (e) => {
+            if (menu.classList.contains("active")) {
+                if (!menu.contains(e.target) && !btn.contains(e.target)) {
+                    toggleMenu(true);
+                }
+            }
+        };
+
+        // Tasto ESC per chiudere
+        document.onkeydown = (e) => {
+            if (e.key === "Escape") toggleMenu(true);
+        };
+    });
+    </script>
+</body>
 </html>
-
-

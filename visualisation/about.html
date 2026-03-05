@@ -1,70 +1,225 @@
- <!--File HTML che definsce il contenuto da visualizzare all'interno della pagina "About"  -->
-
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>About</title>
-  <link rel="stylesheet" href="generalstyle.css">
-  <link rel="stylesheet" href="about.css">
+  <title>About - A Thousand Splendid Suns</title>
+  
+  <link rel="stylesheet" href="../generalstyle.css">
+  
+  <style>
+    /* 1. IMPORTAZIONE FONT */
+    @import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@400;700&display=swap');
+
+    @font-face {
+      font-family: 'LibreBaskerville Italic';
+      src: url('../fonts/LibreBaskervilleItalic.ttf') format('truetype');
+    }
+
+    /* 2. LAYOUT GENERALE */
+    html, body {
+      height: 100%; 
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+      font-family: 'Inconsolata', monospace;
+      background-color: #06011E; /* Assicuriamo il fondo scuro */
+    }
+
+    .text-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center; 
+      justify-content: center; 
+      flex-grow: 1;
+      width: 100%;
+      padding: 100px 20px; 
+      box-sizing: border-box;
+      /* Transizione per l'oscuramento */
+      transition: opacity 0.4s ease;
+    }
+
+    .text {
+      width: 100%;
+      max-width: 50em; 
+      color: #f8ffb890;
+      font-size: 1rem;      
+      line-height: 1.6em;   
+      letter-spacing: 0.02em; 
+    }
+
+    /* 3. TITOLI E SOTTOTITOLI */
+    .title {
+      font-family: 'Inconsolata', monospace;
+      font-size: 1.8rem; 
+      margin-bottom: 30px; 
+      color: #F8FFB8; 
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .subtitle {
+      font-family: 'Inconsolata', monospace;
+      font-size: 1.3rem;
+      margin-top: 40px; 
+      margin-bottom: 12px;
+      color: #F8FFB8; 
+      font-weight: 700;
+      letter-spacing: 0.03em;
+    }
+
+    /* 4. CORPO DEL TESTO */
+    .libre-baskerville-italic {
+      font-family: 'LibreBaskerville Italic', serif;
+      font-size: 1rem; 
+    }
+
+    .section {
+      margin-bottom: 80px; 
+    }
+
+    .section:last-child {
+      margin-bottom: 0;
+    }
+
+    .text p {
+      margin-bottom: 1.5em; 
+    }
+
+    .footer {
+      flex-shrink: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    /* 5. MOBILE OPTIMIZATION */
+    @media screen and (max-width: 768px) {
+      .text-container { 
+        padding: 60px 25px; 
+        justify-content: flex-start; 
+      }
+      .text {
+        font-size: 0.95rem;
+      }
+      .title {
+        font-size: 1.5rem;
+      }
+      .subtitle {
+        font-size: 1.2rem;
+      }
+    }
+  </style>
 </head>
 <body class="project-page">
-<!-- Header con logo-->
-  <header class="header">
-    <img src="../logo/logoheader.png" alt="Logo" class="logo">
 
-<!-- Menu di navigazione -->
-    <nav class="menu">
-      <a href="visualisation.html">VISUALISATION</a>
-      <a href="parameters.html">PARAMETERS</a>
+  <header class="header">
+    <div class="logo-wrapper" id="logo-to-dim">
+      <img src="../logo/logoheader.png" alt="Logo" class="logo">
+    </div>
+
+    <button class="hamburger" id="hamburger-btn" aria-label="Menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <nav class="hamburger-menu" id="hamburger-menu">
+      <a href="visualisation.html">Visualisation</a>
+      <a href="dataset.html">Dataset</a>
+      <a href="parameters.html">Parameters</a>
+      <a href="credits.html">Credits</a>
     </nav>
   </header>
   
-<!-- Spazio per il testo, organizzato in un'unica colonna centrale -->
-  <div class="text-container">
+  <main class="text-container" id="main-content">
     <div class="text">
- <!-- Contenitore di testo sul Progetto, suddiviso in paragrafi e sezioni -->     
+      
       <div class="section">
         <h2 class="title">About the project</h2>
         <p><span class="libre-baskerville-italic">A Thousand Splendid Suns</span> is an Information Design project that transforms complex data into visually meaningful and engaging narratives.</p>
         <p><span class="libre-baskerville-italic">A Thousand Splendid Suns</span> highlights how environments, family, society and culture shape individual opportunities and perceptions, often in unequal ways. Specifically, in patriarchal societies, systemic discrimination against women persists.</p>
-        <p>Inspired by Khaled Hosseini’s novel "A Thousand Splendid Suns", the project reflects universal challenges women face under patriarchal systems. The novel explores the lives of two Afghan women bound by patriarchal structures that, despite their distinct backgrounds, share a universal struggle against the control exerted by societal and familial expectations. Hosseini captures the dynamic through the lens of female strength and endurance under oppressive systems, reflecting the broader challenges faced by women worldwide. Borrowing from Saib-e-Tabrizi’s 17th-century poem, the title symbolizes resilience, hope and women’s inherent societal value. The project’s dual focus celebrates achievements while emphasizing the need for transformative change.</p>
+        <p>Inspired by Khaled Hosseini’s novel "A Thousand Splendid Suns", the project reflects universal challenges women face under patriarchal systems. The novel explores the lives of two Afghan women bound by patriarchal structures that, despite their distinct backgrounds, share a universal struggle against the control exerted by societal and familial expectations. Hosseini captures the dynamic through the lens of female strength and endurance under oppressive systems, reflecting the broader challenges faced by women worldwide. Borrowing from Saib-e-Tabrizi’s 17th-century poem, the title symbolises resilience, hope and women’s inherent societal value. The project’s dual focus celebrates achievements while emphasising the need for transformative change.</p>
         <p>Using data exclusively from women aged 15 and above, <span class="libre-baskerville-italic">A Thousand Splendid Suns</span> provides a global overview of women’s conditions, focusing on both practical realities and cultural perceptions. The dataset, drawn from the OECD Gender, Institutions and Development Database and 2023 contributions by SIGI, UNICEF, the United Nations and the World Health Organization, measures two critical aspects:</p>
+        
         <h3 class="subtitle">Practical Realities</h3>
         <p>Access to financial services, safety and rights.</p>
+        
         <h3 class="subtitle">Cultural Perceptions</h3>
         <p>Attitudes toward gender-based violence, equality and women’s societal valuation.</p>
       </div>
- <!-- Contenitore di testo sulla visualizzazione, suddiviso in paragrafi e sezioni -->
+
       <div class="section">
         <h2 class="title">About the visualisation</h2>
         <p>Inspired by Khaled Hosseini’s novel, <span class="libre-baskerville-italic">A Thousand Splendid Suns</span> uses a geographic representation to bring the dataset to life. Each country is represented as a sun, with its brightness symbolising progress in economic participation, safety and representation. Luminous suns highlight areas where women experience better conditions, while darker ones reveal significant barriers. This metaphor transforms abstract data into an intuitive depiction of global disparities and progress. The project employs a two-layer visualisation system to effectively represent the data: </p>
+        
         <h3 class="subtitle">Global visualisation</h3>
         <p>The global view displays each country as a dot, geographically arranged. The brightness of each dot reflects the average performance across all parameters measured. Countries with incomplete data appear dimmer, regardless of their actual conditions, revealing data gaps while still illustrating the state of women’s rights. Clicking on a dot transitions to the second visualisation layer, offering a more detailed visualisation for the selected country.</p>
+        
         <h3 class="subtitle">Individual visualisation</h3>
-        <p>At the country level, each sun becomes a detailed glyph with 14 rays, each corresponding to one parameter and grouped into four quadrants, each representing a thematic area of the dataset. The length and color of each ray represent the percentage score for the parameter. Fully extinguished rays indicate a lack of data for that parameter. Hovering over a ray displays the parameter name, while clicking directs users to a page with a detailed explanation of the parameter.</p>
+        <p>At the country level, each sun becomes a detailed glyph with 14 rays, each corresponding to one parameter and grouped into four quadrants, each representing a thematic area of the dataset. The length and colour of each ray represent the percentage score for the parameter. Fully extinguished rays indicate a lack of data for that parameter. Hovering over a ray displays the parameter name, while clicking directs users to a page with a detailed explanation of the parameter.</p>
+        
         <p>This dual-layer approach allows users to explore both a broad global overview and a detailed analysis of individual countries. Together, the visualisations foster a deeper understanding of women’s conditions worldwide, shining a light on both inequalities and progress.</p>
         <p>Through this initiative, we aim to turn raw data into a realistic narrative that fosters reflection and inspires efforts to improve women’s conditions. By translating data into visualisation, the project makes abstract inequalities tangible and to turn raw data into a realistic and compelling narrative, offering a clear understanding of the challenges women face worldwide and inspiring efforts to improve female conditions.</p>
       </div>
- <!-- Contenitore di testo sui membri del team e i rispettivi compiti svolti, suddiviso in paragrafi e sezioni -->
-        <div class="section">
-        <h2 class="title">About us</h2>
-        <p>We are six students from Politecnico di Milano, united by our passion for creativity, technology and innovation.
-          As design students, we developed this project during the Computer Graphics for Information Design course. Together, we have transformed complex data into visually meaningful and engaging narratives.
-          Each of us brings unique skills to the table:
-          Francesca and Syria took care of the visual design and developed the HTML, CSS and JavaScript code for the entire website. 
-          Arianna and Marta managed dataset processing, content research and concept development. 
-          Giacinta and Chiara were responsible for creating the entire p5.js code, from the overall visualisation to the design of the individual suns.</p>
-      </div>
     </div>
-  </div>
-</body>
-  
-  <!-- Footer -->
+  </main>
+
   <footer class="footer">
-    <p>Laboratorio di Computer Grafica per l'Information Design - Politecnico di Milano</p>
+    <em>A Thousand Splendid Suns</em> // Laboratorio di Computer Grafica per l'Information Design // Scuola del Design // Politecnico di Milano // a.a. 2024/2025
   </footer>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const btn = document.getElementById("hamburger-btn");
+        const menu = document.getElementById("hamburger-menu");
+        const logo = document.getElementById("logo-to-dim");
+        const main = document.getElementById("main-content");
+        const footer = document.querySelector(".footer");
+
+        // Creazione backdrop
+        let backdrop = document.getElementById("menu-backdrop");
+        if (!backdrop) {
+            backdrop = document.createElement("div");
+            backdrop.id = "menu-backdrop";
+            document.body.appendChild(backdrop);
+        }
+
+        function toggleMenu(forceClose = false) {
+            const isOpening = forceClose ? false : !menu.classList.contains("active");
+
+            if (isOpening) {
+                menu.classList.add("active");
+                backdrop.classList.add("active");
+                if (logo) logo.classList.add("content-dimmed");
+                if (main) main.classList.add("content-dimmed");
+                if (footer) footer.classList.add("content-dimmed");
+            } else {
+                menu.classList.remove("active");
+                backdrop.classList.remove("active");
+                if (logo) logo.classList.remove("content-dimmed");
+                if (main) main.classList.remove("content-dimmed");
+                if (footer) footer.classList.remove("content-dimmed");
+            }
+        }
+
+        btn.onclick = (e) => {
+            e.stopPropagation();
+            toggleMenu();
+        };
+
+        backdrop.onclick = () => toggleMenu(true);
+
+        document.onclick = (e) => {
+            if (menu.classList.contains("active") && !menu.contains(e.target) && !btn.contains(e.target)) {
+                toggleMenu(true);
+            }
+        };
+
+        document.onkeydown = (e) => {
+            if (e.key === "Escape") toggleMenu(true);
+        };
+    });
+  </script>
 </body>
 </html>
-
