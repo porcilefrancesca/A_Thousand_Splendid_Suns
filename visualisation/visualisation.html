@@ -27,39 +27,35 @@
             transition: opacity 0.4s ease; 
         }
         .info-overlay {
-            position: absolute;
-            top: 1%; /* Posizione proporzionale dall'alto */
-            right: 2%; /* Posizione proporzionale da destra */
-            z-index: 10;
+    position: absolute;
+    top: 2%; /* O 1%, come preferisci */
+    right: 2%; 
+    z-index: 10;
 
-            /* LARGHEZZA TOTALMENTE SCALABILE */
-            /* Il box sarà sempre largo il 22% della larghezza dello schermo */
-            width: 22vw; 
-            /* Impediamo solo che diventi assurdamente grande su monitor giganti */
-            max-width: 220px; 
-            
-            background-color: rgba(248, 255, 184, 0.05); 
-            border: 1px solid rgba(248, 255, 184, 0.3);
-            
-            /* PADDING SCALABILE */
-            padding: 1.2vw; 
-            border-radius: 1vw; /* Anche gli angoli si arrotondano proporzionalmente */
-            box-sizing: border-box;
+    /* PASSO FONDAMENTALE: Liberiamo il box */
+    width: auto;          /* Il box si allarga per contenere le tue righe */
+    max-width: 340px;    /* Un limite più generoso per le parole lunghe */
+    
+    background-color: rgba(248, 255, 184, 0.05); 
+    border: 1px solid rgba(248, 255, 184, 0.3);
+    
+    padding: 1.2vw; 
+    border-radius: 0.5vw;
+    box-sizing: border-box;
 
-            /* TESTO TOTALMENTE SCALABILE */
-            color: #f8ffb8 !important;
-            font-family: 'Inconsolata', monospace !important;
-            font-weight: 400 !important;
-            
-            /* Il font scala linearmente con lo schermo */
-            /* 1.2vw significa che la grandezza è l'1.2% della larghezza schermo */
-            font-size: 0.9vw !important; 
-            line-height: 1.5em !important;
-            
-            text-align: left !important;
-            -webkit-font-smoothing: antialiased !important;
-            -moz-osx-font-smoothing: grayscale !important;
-        }
+    color: #f8ffb8 !important;
+    font-family: 'Inconsolata', monospace !important;
+    font-size: 1vw !important; /* Questo va bene, è scalabile */
+    line-height: 1.5em !important;
+    
+    text-align: left !important;
+    
+    /* Puliamo le proprietà che creavano confusione */
+    text-wrap: none !important; 
+    white-space: normal !important;
+    
+    -webkit-font-smoothing: antialiased !important;
+}
 
         /* Correzione per schermi piccolissimi (smartphone verticali) */
         @media screen and (max-width: 480px) {
@@ -93,9 +89,12 @@
     </header>
 
     <main id="sketch-container">
-        <div class="info-overlay">
-            A constellation shedding light on the condition of women across the world: the brighter the sun, the better the condition.
-        </div>
+<div class="info-overlay">
+    A constellation shedding light<br> 
+    on the condition of women<br> 
+    across the world: the brighter<br> 
+    the sun, the better the condition.
+</div>
     </main>
 
    <footer class="footer">
